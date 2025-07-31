@@ -1,12 +1,10 @@
 {
-    "name": "javascript",
+    "name": "selenium_webdriver",
     "version": "1.0.0",
     "type": "module",
     "scripts": {
         "test": "node src/scrape.js"
     },
-    "author": "The Selenium project",
-    "license": "Apache-2.0",
     "dependencies": {
         "assert": "2.1.0",
         "selenium-webdriver": "4.34.0"

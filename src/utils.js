@@ -356,9 +356,9 @@ export async function parsePageComicDetail(driver) {
         genres,
         updatedOn,
       };
-      // console.log(JSON.stringify(obj, null, 2));
+      console.log(JSON.stringify(obj, null, 2));
 
-      // return obj
+      return obj
     } catch {
       let description = await textareaElement(
         driver,
@@ -381,9 +381,9 @@ export async function parsePageComicDetail(driver) {
         genres,
         updatedOn,
       };
-      // console.log(JSON.stringify(obj, null, 2));
+      console.log(JSON.stringify(obj, null, 2));
 
-      // return obj
+      return obj
     } finally {
       // Optional: Code that always executes, regardless of error or success
       let chapterLinks = await textElements(

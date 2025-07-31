@@ -318,7 +318,12 @@ export async function parsePageComicDetail(driver) {
         //   .getText();
 
         // await button.click();
-        await clickNormalElement(chapterLinks[i], By.xpath("./div"));
+        await clickNormalElement(
+          driver,
+          By.xpath(
+            `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/div`,
+          ),
+        );
         await driver.wait(until.urlContains("https://asuracomic.net"), 100000); // Wait for detail page to load
 
         // await driver.wait(until.elementsLocated(By.xpath('//div[contains(@class, "w-full mx-auto center")]/img[contains(@class, "object-cover mx-auto")]')), 100000);

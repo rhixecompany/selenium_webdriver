@@ -7,7 +7,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import assert from "node:assert";
 
-let driver; // Declare driver outside the async function
+let driver; // Declare driver outside the export async function
 
 let userDataDir;
 
@@ -15,9 +15,9 @@ let comicData = [];
 let chapterData = [];
 let newChapterData = [];
 
-async function initializeDriver() {
+export async function initializeDriver() {
   let service;
-  let options; // Declare options outside the async function
+  let options; // Declare options outside the export async function
   options = new Chrome.Options();
   let __filename = fileURLToPath(import.meta.url);
   let __dirname = dirname(__filename);
@@ -46,7 +46,7 @@ async function initializeDriver() {
     .build();
 }
 
-async function performGet(driver, url) {
+export async function performGet(driver, url) {
   await driver.get(url);
   await driver.wait(
     until.elementLocated(
@@ -59,7 +59,7 @@ async function performGet(driver, url) {
   assert.equal("Series - Asura Scans", await driver.getTitle());
 }
 
-async function clickElement(driver, locator) {
+export async function clickElement(driver, locator) {
   try {
     let element = await driver.findElement(locator); // Wait up to 5 seconds
     if (await element.isEnabled()) {
@@ -76,7 +76,7 @@ async function clickElement(driver, locator) {
     }
   }
 }
-async function textareaElement(driver, locator) {
+export async function textareaElement(driver, locator) {
   try {
     let element = await driver.findElement(locator).getText();
 
@@ -92,7 +92,7 @@ async function textareaElement(driver, locator) {
     }
   }
 }
-async function textElement(driver, locator) {
+export async function textElement(driver, locator) {
   try {
     let element = await driver.findElement(locator); // Wait up to 5 seconds
     return await element.getText();
@@ -107,7 +107,7 @@ async function textElement(driver, locator) {
     }
   }
 }
-async function imageElement(driver, locator) {
+export async function imageElement(driver, locator) {
   try {
     let element = await driver.findElement(locator); // Wait up to 5 seconds
     return await element.getAttribute("src");
@@ -122,7 +122,7 @@ async function imageElement(driver, locator) {
     }
   }
 }
-async function hrefElement(driver, locator) {
+export async function hrefElement(driver, locator) {
   try {
     let element = await driver.findElement(locator); // Wait up to 5 seconds
     return await element.getAttribute("href");
@@ -137,7 +137,7 @@ async function hrefElement(driver, locator) {
     }
   }
 }
-async function textElements(driver, locator) {
+export async function textElements(driver, locator) {
   try {
     let element = await driver.findElements(locator); // Wait up to 5 seconds
     return await element;
@@ -153,7 +153,7 @@ async function textElements(driver, locator) {
   }
 }
 
-async function parsePage(driver) {
+export async function parsePage(driver) {
   let comicLinks = await driver.findElements(
     By.xpath(
       "//div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a",
@@ -193,7 +193,7 @@ async function parsePage(driver) {
   }
 }
 
-async function parsePageChapterDetail(driver, updatedOn) {
+export async function parsePageChapterDetail(driver, updatedOn) {
   let urlString = await hrefElement(
     driver,
     By.xpath(
@@ -244,7 +244,7 @@ async function parsePageChapterDetail(driver, updatedOn) {
   }
 }
 
-async function parsePageComicDetail(driver) {
+export async function parsePageComicDetail(driver) {
   try {
     let urlString = await driver.getCurrentUrl();
     let urlParts = await urlString.split("/");

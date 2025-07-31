@@ -209,7 +209,7 @@ async function parsePageComicDetail(driver) {
         let images = []
         let image = await imageElement(driver, By.xpath('//div[contains(@class, "relative col-span-full")]/img[contains(@class, "rounded mx-auto")]'));
         try {
-            let image1 = await imageElement(driver, By.xpath('//div[contains(@class, "bigcover")]/img[contains(@data-nimg, "1")]'));
+            let image1 = await driver.findElement(driver, By.xpath('//div[contains(@class, "bigcover")]/img[contains(@data-nimg, "1")]')).getAttribute('src');
             images.push(
                 {
                     "url": image

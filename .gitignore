@@ -1,4 +1,4 @@
 node_modules/
 .idea
 chrome-profile*/
-.vscode/
+.vscode

@@ -227,14 +227,14 @@ async function parsePageComicDetail(driver) {
             let description = await textareaElement(driver, By.xpath('//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]'))
 
             let obj = { title, images, description, slug, serialization, author, artist, rating, status, type, genres, updatedOn }
-            // console.log(JSON.stringify(obj, null, 2));
+            console.log(JSON.stringify(obj, null, 2));
             return obj
         } catch {
 
             let description = await textareaElement(driver, By.xpath('//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]/p'))
 
             let obj = { title, images, description, slug, serialization, author, artist, rating, status, type, genres, updatedOn }
-            // console.log(JSON.stringify(obj, null, 2));
+            console.log(JSON.stringify(obj, null, 2));
             return obj
         } finally {
             // Optional: Code that always executes, regardless of error or success

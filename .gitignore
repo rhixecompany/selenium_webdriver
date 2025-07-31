@@ -2,3 +2,7 @@ node_modules/
 .idea
 chrome-profile*/
 .vscode
+comics.json
+chapters.json
+comics-*.json
+chapters-*.json

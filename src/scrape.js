@@ -291,8 +291,8 @@ export async function parsePageComicDetail(driver) {
           '//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")]/a',
         ),
       );
-      for (let i = 1; i < 4; i++) {
-        // for (let i = 0; i < chapterLinks.length; i++) {
+      // for (let i = 1; i < 4; i++) {
+      for (let i = 0; i < chapterLinks.length; i++) {
         let button = await chapterLinks[i].findElement(By.xpath("./div"));
         let updatedOn = await chapterLinks[i]
           .findElement(By.xpath("./h3[2]"))
@@ -333,7 +333,7 @@ async function automateProcess(url) {
   try {
     await performGet(driver, url);
     let currentPage = 1;
-    let totalPages = 2; // Assume you know the total pages or can extract it
+    let totalPages = 20; // Assume you know the total pages or can extract it
 
     while (currentPage <= totalPages) {
       console.log(`Scraping page ${currentPage}`);

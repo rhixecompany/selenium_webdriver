@@ -303,13 +303,15 @@ export async function parsePageComicDetail(driver) {
           '//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")]/a',
         ),
       );
-      for (let i = 1; i < 5; i++) {
+      for (let i = 1; i < 4; i++) {
         // for (let i = 0; i < chapterLinks.length; i++) {
         // let button = await chapterLinks[i].findElement(By.xpath("./div"));
 
         let updatedOn = await textNormalElement(
-          chapterLinks[i],
-          By.xpath("./h3[2]"),
+          driver,
+          By.xpath(
+            `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/h3[2]`,
+          ),
         );
         // let updatedOn = await chapterLinks[i]
         //   .findElement(By.xpath("./h3[2]"))

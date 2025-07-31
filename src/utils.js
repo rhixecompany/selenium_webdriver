@@ -71,7 +71,9 @@ export async function clickNormalElement(driver, locator, maxRetries = 3) {
       }
     }
   }
-  throw new Error(`Failed to click element after ${maxRetries} retries.`);
+  throw new Error(
+    `Failed to click Normal element after ${maxRetries} retries.`,
+  );
 }
 export async function clickElement(driver, locator, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {
@@ -130,7 +132,9 @@ export async function textNormalElement(driver, locator, maxRetries = 3) {
       }
     }
   }
-  throw new Error(`Failed to get textElement after ${maxRetries} retries.`);
+  throw new Error(
+    `Failed to get textNormalElement after ${maxRetries} retries.`,
+  );
 }
 export async function textElement(driver, locator, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {

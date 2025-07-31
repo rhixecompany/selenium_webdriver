@@ -5,7 +5,15 @@ import fs from "fs";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { clickElement, textElement, textElements, textareaElement, imageElement, hrefElement, performGet } from "./utils.js";
+import {
+  clickElement,
+  textElement,
+  textElements,
+  textareaElement,
+  imageElement,
+  hrefElement,
+  performGet,
+} from "./utils.js";
 
 let driver; // Declare driver outside the async function
 
@@ -47,7 +55,8 @@ async function initializeDriver() {
 }
 
 export async function parsePage(driver) {
-  let comicLinks = await textElements(driver,
+  let comicLinks = await textElements(
+    driver,
     By.xpath(
       "//div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a",
     ),
@@ -78,7 +87,8 @@ export async function parsePage(driver) {
     //   10000,
     // );
     // Re-locate comic links on the listing page after navigating back
-    comicLinks = await textElements(driver,
+    comicLinks = await textElements(
+      driver,
       By.xpath(
         "//div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a",
       ),
@@ -257,7 +267,7 @@ export async function parsePageComicDetail(driver) {
       };
       console.log(JSON.stringify(obj, null, 2));
 
-      return obj
+      return obj;
     } catch {
       let description = await textareaElement(
         driver,
@@ -282,7 +292,7 @@ export async function parsePageComicDetail(driver) {
       };
       console.log(JSON.stringify(obj, null, 2));
 
-      return obj
+      return obj;
     } finally {
       // Optional: Code that always executes, regardless of error or success
       let chapterLinks = await textElements(

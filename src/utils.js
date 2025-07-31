@@ -51,6 +51,28 @@ export async function performGet(driver, url) {
   assert.equal("Series - Asura Scans", await driver.getTitle());
 }
 
+export async function clickNormalElement(driver, locator, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      let element = await driver.findElement(locator); // Wait up to 5 seconds
+      if (await element.isEnabled()) {
+        return await element.click();
+      } else {
+        return false;
+      }
+    } catch (error) {
+      if (error.name === "StaleElementReferenceError") {
+        console.warn(
+          `Stale element reference encountered, retrying... (${i + 1}/${maxRetries})`,
+        );
+        // await driver.sleep(500); // Small delay before retrying
+      } else {
+        throw error; // Re-throw other errors
+      }
+    }
+  }
+  throw new Error(`Failed to click element after ${maxRetries} retries.`);
+}
 export async function clickElement(driver, locator, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {
     try {
@@ -91,6 +113,24 @@ export async function textareaElement(driver, locator, maxRetries = 3) {
     }
   }
   throw new Error(`Failed to get textareaElement after ${maxRetries} retries.`);
+}
+export async function textNormalElement(driver, locator, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      let element = await driver.findElement(locator); // Wait up to 5 seconds
+      return await element.getText();
+    } catch (error) {
+      if (error.name === "StaleElementReferenceError") {
+        console.warn(
+          `Stale element reference encountered, retrying... (${i + 1}/${maxRetries})`,
+        );
+        // await driver.sleep(500); // Small delay before retrying
+      } else {
+        throw error; // Re-throw other errors
+      }
+    }
+  }
+  throw new Error(`Failed to get textElement after ${maxRetries} retries.`);
 }
 export async function textElement(driver, locator, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {

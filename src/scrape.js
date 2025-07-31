@@ -13,6 +13,8 @@ import {
   imageElement,
   hrefElement,
   performGet,
+  clickNormalElement,
+  textNormalElement,
 } from "./utils.js";
 
 let driver; // Declare driver outside the async function
@@ -301,14 +303,20 @@ export async function parsePageComicDetail(driver) {
           '//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")]/a',
         ),
       );
-      // for (let i = 1; i < 4; i++) {
-      for (let i = 0; i < chapterLinks.length; i++) {
-        let button = await chapterLinks[i].findElement(By.xpath("./div"));
-        let updatedOn = await chapterLinks[i]
-          .findElement(By.xpath("./h3[2]"))
-          .getText();
+      for (let i = 1; i < 5; i++) {
+        // for (let i = 0; i < chapterLinks.length; i++) {
+        // let button = await chapterLinks[i].findElement(By.xpath("./div"));
 
-        await button.click();
+        let updatedOn = await textNormalElement(
+          chapterLinks[i],
+          By.xpath("./h3[2]"),
+        );
+        // let updatedOn = await chapterLinks[i]
+        //   .findElement(By.xpath("./h3[2]"))
+        //   .getText();
+
+        // await button.click();
+        await clickNormalElement(chapterLinks[i], By.xpath("./div"));
         await driver.wait(until.urlContains("https://asuracomic.net"), 100000); // Wait for detail page to load
 
         // await driver.wait(until.elementsLocated(By.xpath('//div[contains(@class, "w-full mx-auto center")]/img[contains(@class, "object-cover mx-auto")]')), 100000);

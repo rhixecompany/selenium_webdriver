@@ -1,6 +1,6 @@
-import {WebDriver, By} from 'selenium-webdriver';
-import {BasePage} from './basePage';
-import {HomePage} from './homePage'; // Nested POM example
+import { WebDriver, By } from 'selenium-webdriver';
+import { BasePage } from './basePage';
+import { HomePage } from './homePage'; // Nested POM example
 import {
   comicItem,
   comicTitle,
@@ -54,10 +54,10 @@ export class SeriesPage extends BasePage {
 
   public async displayComic(): Promise<any> {
     try {
-      let comgenres: {name: string}[] = [];
+      let comgenres: { name: string }[] = [];
       let gens = await this.getElements(this._comicGenres);
       gens &&
-        gens.map(async (gen) => comgenres.push({name: await gen.getText()}));
+        gens.map(async (gen) => comgenres.push({ name: await gen.getText() }));
       let comic = {
         url: await this.driver.getCurrentUrl(),
         title: await this.getElement(this._comicTitle),
@@ -78,8 +78,8 @@ export class SeriesPage extends BasePage {
           await this.driver.findElement(this._comicDescription)
         ).isDisplayed())
           ? (await this.getElement(this._comicDescription))
-              .replace(/(\r\n|\n|\r)/g, '')
-              .trim()
+            .replace(/(\r\n|\n|\r)/g, '')
+            .trim()
           : '',
         rating: await this.getElement(this._comicRating),
         status: await this.getElement(this._comicStatus),
@@ -100,10 +100,10 @@ export class SeriesPage extends BasePage {
       return comic;
     } catch (error) {
       console.log(`Error in - ${error}`);
-      let comgenres: {name: string}[] = [];
+      let comgenres: { name: string }[] = [];
       let gens = await this.getElements(this._comicGenres);
       gens &&
-        gens.map(async (gen) => comgenres.push({name: await gen.getText()}));
+        gens.map(async (gen) => comgenres.push({ name: await gen.getText() }));
       let comic = {
         url: await this.driver.getCurrentUrl(),
         title: await this.getElement(this._comicTitle),
@@ -122,14 +122,14 @@ export class SeriesPage extends BasePage {
           )
         ).isDisplayed())
           ? (
-              await this.getElement(
-                By.xpath(
-                  '//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]'
-                )
+            await this.getElement(
+              By.xpath(
+                '//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]'
               )
             )
-              .replace(/(\r\n|\n|\r)/g, '')
-              .trim()
+          )
+            .replace(/(\r\n|\n|\r)/g, '')
+            .trim()
           : '',
         rating: await this.getElement(this._comicRating),
         status: await this.getElement(this._comicStatus),
@@ -152,10 +152,10 @@ export class SeriesPage extends BasePage {
   }
   public async displayChapter(chapterupdatedon: string): Promise<any> {
     try {
-      let chapterimgs: {url: string}[] = [];
+      let chapterimgs: { url: string }[] = [];
       let imgs = await this.getElements(this._chapterImage);
       imgs.map(async (img) =>
-        chapterimgs.push({url: await img.getAttribute('src')})
+        chapterimgs.push({ url: await img.getAttribute('src') })
       );
       let text = await this.getElement(this._chapterName);
       let link = await this.findElement(this._chaptercomicSlug);
@@ -229,7 +229,7 @@ export class SeriesPage extends BasePage {
         comicData.push(comic);
         console.log(comic);
         let chapters = await this.getElements(this._comicChapters);
-        for (let i = 1; i < chapters.slice(0, 3).length; i++) {
+        for (let i = 1; i < chapters.slice(0, 4).length; i++) {
           const chapterupdatedon = await this.getElement(
             By.xpath(
               `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/h3[2]`

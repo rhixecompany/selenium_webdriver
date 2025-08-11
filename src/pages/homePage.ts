@@ -3,7 +3,8 @@ import {WebDriver, By, until} from 'selenium-webdriver';
 import {BasePage} from './basePage';
 import {nextButton} from '../config/locators';
 export class HomePage extends BasePage {
-  private nextButton = By.partialLinkText(nextButton);
+  private nextButton = By.xpath(nextButton);
+  // private nextButton = By.partialLinkText(nextButton);
   constructor(driver: WebDriver) {
     super(driver);
   }
@@ -17,8 +18,8 @@ export class HomePage extends BasePage {
   //     }
   // }
   public async clickNextButton(): Promise<void> {
-    const element = await this.driver.findElement(this.nextButton);
-    await this.driver.wait(until.elementIsEnabled(element), 50000);
-    return element.click();
+    let element = await this.driver.findElement(this.nextButton);
+    await this.driver.wait(until.elementIsVisible(element), 50000);
+    return await element.click();
   }
 }

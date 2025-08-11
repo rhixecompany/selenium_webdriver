@@ -13,13 +13,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends(
     // 'next/core-web-vitals',
-    'next/typescript',
+    // 'next/typescript',
     'prettier',
     'plugin:tailwindcss/recommended'
   ),
   {
     rules: {
-      'no-undef': 'error',
+      'no-undef': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/ban-ts-comment': 'error',
       '@typescript-eslint/no-explicit-any': 'off',

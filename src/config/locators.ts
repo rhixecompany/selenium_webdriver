@@ -1,7 +1,9 @@
 // Series Page
 export const comicItem =
   "//div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a/div";
-export const nextButton = 'Next';
+
+export const nextButton =
+  '//div[contains(@class, "flex items-center justify-center py-[15px] bg-[#222222]")]/div/a[2]';
 // export const nextButton =
 //   "//div[@class='flex items-center justify-center py-[15px] bg-[#222222] ']/a[2]";
 

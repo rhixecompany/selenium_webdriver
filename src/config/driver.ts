@@ -1,12 +1,12 @@
-import { Builder, WebDriver, Browser } from 'selenium-webdriver';
-import { Options, ServiceBuilder } from 'selenium-webdriver/chrome';
+import {Builder, WebDriver, Browser} from 'selenium-webdriver';
+import {Options, ServiceBuilder} from 'selenium-webdriver/chrome';
 import fs from 'fs';
 import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-let o;
+// import { dirname } from 'path';
+// import { fileURLToPath } from 'url';
+let o: Options;
 
-let s;
+let s: ServiceBuilder;
 let userDataDir: fs.PathLike;
 export class WebDriverManager {
   private static driver: WebDriver;
@@ -14,8 +14,8 @@ export class WebDriverManager {
   public static async getDriver(): Promise<WebDriver> {
     if (!WebDriverManager.driver) {
       o = new Options();
-      let __filename = fileURLToPath(import.meta.url);
-      let __dirname = dirname(__filename);
+      // let __filename = fileURLToPath(import.meta.url);
+      // let __dirname = dirname(__filename);
 
       let directoryName = 'chrome-profile';
       let directoryPath = path.join(__dirname, '../', '../', directoryName); // Creates in the same directory as the script
@@ -24,15 +24,15 @@ export class WebDriverManager {
 
       o.addArguments(`--user-data-dir=${userDataDir}`);
       o.addArguments('disable-infobars');
-      o.addArguments('--no-sandbox');
-      o.addArguments('--disable-dev-shm-usage');
-      o.addArguments("--headless=new");
-      o.addArguments("--disable-gpu"); // Recommended for headless
-      o.addArguments("--enable-unsafe-swiftshader");
-      o.excludeSwitches("enable-automation");
-      o.setAcceptInsecureCerts(true);
-      o.setUserPreferences({ credentials_enable_service: false });
-      o.setPageLoadStrategy('normal');
+      // o.addArguments('--no-sandbox');
+      // o.addArguments('--disable-dev-shm-usage');
+      o.addArguments('--headless=new');
+      // o.addArguments("--disable-gpu"); // Recommended for headless
+      // o.addArguments("--enable-unsafe-swiftshader");
+      // o.excludeSwitches("enable-automation");
+      // o.setAcceptInsecureCerts(true);
+      o.setUserPreferences({credentials_enable_service: false});
+      // o.setPageLoadStrategy('normal');
       s = new ServiceBuilder();
       WebDriverManager.driver = await new Builder()
         .forBrowser(Browser.CHROME)
@@ -48,7 +48,7 @@ export class WebDriverManager {
     if (WebDriverManager.driver) {
       await WebDriverManager.driver.quit();
       WebDriverManager.driver = null as any; // Reset for subsequent tests
-      await fs.rmSync(userDataDir, { recursive: true, force: true });
+      await fs.rmSync(userDataDir, {recursive: true, force: true});
     }
   }
 }

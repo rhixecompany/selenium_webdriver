@@ -1,17 +1,11 @@
 {
     "compilerOptions": {
         // Target latest version of ECMAScript.
-        "target": "ES2017",
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
-        ],
+        "target": "esnext",
         // Search under node_modules for non-relative imports.
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         // Process & infer types from .js files.
         "allowJs": true,
-        "skipLibCheck": true,
         // Don't emit; allow Babel to transform files.
         "noEmit": true,
         // Enable strictest (strict includes: noImplicitAny, noImplicitThis, alwaysStrict and strictNullChecks)
@@ -22,33 +16,10 @@
         // Import non-ES modules as default imports.
         "esModuleInterop": true,
         // To read custom module declarations with generic type (any)
-        "module": "esnext",
+        "module": "commonjs",
         "typeRoots": [
             "./node_modules/@types/",
-            "./types"
-        ],
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
-        "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ],
-        "paths": {
-            "@/*": [
-                "./*"
-            ]
-        }
-    },
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+            "./typings"
+        ]
+    }
 }

@@ -1,6 +1,5 @@
 import { WebDriver, By } from 'selenium-webdriver';
 import { BasePage } from './basePage';
-import { HomePage } from './homePage'; // Nested POM example
 import {
   comicItem,
   comicTitle,
@@ -19,80 +18,79 @@ import {
   chapterName,
   chaptercomicSlug,
   chaptercomicTitle,
-  comicChapters
-} from '../config/locators';
-import fs from 'fs';
-let comicData: any[] = [];
-let chapterData: any[] = [];
-export class SeriesPage extends BasePage {
-  private comicList = By.xpath(comicItem);
-  private _comicGenres = By.xpath(comicGenres);
-  private _comicTitle = By.xpath(comicTitle);
-  private _comicImage = By.xpath(comicImage);
-  private _comicImage1 = By.xpath(comicImage1);
-  private _comicDescription = By.xpath(comicDescription);
-  private _comicArtist = By.xpath(comicArtist);
-  private _comicAuthor = By.xpath(comicAuthor);
-  private _comicRating = By.xpath(comicRating);
-  private _comicStatus = By.xpath(comicStatus);
-  private _comicType = By.xpath(comicType);
-  private _comicUpdatedon = By.xpath(comicUpdatedon);
-  private _comicChapters = By.xpath(comicChapters);
-  private _comicSerialization = By.xpath(comicSerialization);
-  private _chapterName = By.xpath(chapterName);
-  private _chapterImage = By.xpath(chapterImage);
-  private _chaptercomicTitle = By.xpath(chaptercomicTitle);
-  private _chaptercomicSlug = By.xpath(chaptercomicSlug);
+  comicChapters,
+  nextButton
+} from '../utils/locators';
+// import fs from 'fs';
 
+import { Chapter, Comic } from '../../types';
+
+interface Data {
+  comicData: Comic[];
+  chapterData: Chapter[];
+}
+
+let comicData: Comic[] = [];
+let chapterData: Chapter[] = [];
+export class SeriesPage extends BasePage {
+  private readonly comicList = By.xpath(comicItem);
+  private readonly _comicGenres = By.xpath(comicGenres);
+  private readonly _comicTitle = By.xpath(comicTitle);
+  private readonly _comicImage = By.xpath(comicImage);
+  private readonly _comicImage1 = By.xpath(comicImage1);
+  private readonly _comicDescription = By.xpath(comicDescription);
+  private readonly _comicArtist = By.xpath(comicArtist);
+  private readonly _comicAuthor = By.xpath(comicAuthor);
+  private readonly _comicRating = By.xpath(comicRating);
+  private readonly _comicStatus = By.xpath(comicStatus);
+  private readonly _comicType = By.xpath(comicType);
+  private readonly _comicUpdatedon = By.xpath(comicUpdatedon);
+  private readonly _comicChapters = By.xpath(comicChapters);
+  private readonly _comicSerialization = By.xpath(comicSerialization);
+  private readonly _chapterName = By.xpath(chapterName);
+  private readonly _chapterImage = By.xpath(chapterImage);
+  private readonly _chaptercomicTitle = By.xpath(chaptercomicTitle);
+  private readonly _chaptercomicSlug = By.xpath(chaptercomicSlug);
+  private readonly _nextButton = By.xpath(nextButton);
   constructor(driver: WebDriver) {
     super(driver);
   }
-
   public async navigateTo(url: string) {
     await this.driver.get(url); // Replace with your URL
   }
-
-  public async displayComic(): Promise<any> {
+  public async displayComic(): Promise<Comic> {
     try {
       let comgenres: { name: string }[] = [];
-      let gens = await this.getElements(this._comicGenres);
+      let gens = await this.getAllElement(this._comicGenres);
       gens &&
         gens.map(async (gen) => comgenres.push({ name: await gen.getText() }));
       let comic = {
         url: await this.driver.getCurrentUrl(),
-        title: await this.getElement(this._comicTitle),
+        title: await this.getText(this._comicTitle),
         slug: (await this.driver.getCurrentUrl()).split('/')[4],
         images: [
           {
-            url: await this.getImageElement(this._comicImage)
+            url: await this.getAttr(this._comicImage, 'src')
           },
           {
-            url: (await (
-              await this.driver.findElement(this._comicImage1)
-            ).isDisplayed())
-              ? await this.getImageElement(this._comicImage1)
-              : ''
+            url: await this.getOptAttr(this._comicImage1, 'src')
           }
         ],
-        description: (await (
-          await this.driver.findElement(this._comicDescription)
-        ).isDisplayed())
-          ? (await this.getElement(this._comicDescription))
-            .replace(/(\r\n|\n|\r)/g, '')
-            .trim()
-          : '',
-        rating: await this.getElement(this._comicRating),
-        status: await this.getElement(this._comicStatus),
-        updatedOn: await this.getElement(this._comicUpdatedon),
-        serialization: await this.getElement(this._comicSerialization),
+        description: (await this.getText(this._comicDescription))
+          .replace(/(\r\n|\n|\r)/g, '')
+          .trim(),
+        rating: await this.getText(this._comicRating),
+        status: await this.getText(this._comicStatus),
+        updatedOn: await this.getText(this._comicUpdatedon),
+        serialization: await this.getText(this._comicSerialization),
         type: {
-          name: await this.getElement(this._comicType)
+          name: await this.getText(this._comicType)
         },
         artist: {
-          name: await this.getElement(this._comicArtist)
+          name: await this.getText(this._comicArtist)
         },
         author: {
-          name: await this.getElement(this._comicAuthor)
+          name: await this.getText(this._comicAuthor)
         },
         genres: comgenres
       };
@@ -101,48 +99,40 @@ export class SeriesPage extends BasePage {
     } catch (error) {
       console.log(`Error in - ${error}`);
       let comgenres: { name: string }[] = [];
-      let gens = await this.getElements(this._comicGenres);
+      let gens = await this.getAllElement(this._comicGenres);
       gens &&
         gens.map(async (gen) => comgenres.push({ name: await gen.getText() }));
       let comic = {
         url: await this.driver.getCurrentUrl(),
-        title: await this.getElement(this._comicTitle),
+        title: await this.getText(this._comicTitle),
         slug: (await this.driver.getCurrentUrl()).split('/')[4],
         images: [
           {
-            url: await this.getImageElement(this._comicImage)
+            url: await this.getAttr(this._comicImage, 'src')
           }
         ],
 
-        description: (await (
-          await this.driver.findElement(
+        description: (
+          await this.getText(
             By.xpath(
               '//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]'
             )
           )
-        ).isDisplayed())
-          ? (
-            await this.getElement(
-              By.xpath(
-                '//div[contains(@class, "col-span-12 sm:col-span-9")]/span[contains(@class, "font-medium text-sm text-[#A2A2A2]")]'
-              )
-            )
-          )
-            .replace(/(\r\n|\n|\r)/g, '')
-            .trim()
-          : '',
-        rating: await this.getElement(this._comicRating),
-        status: await this.getElement(this._comicStatus),
-        updatedOn: await this.getElement(this._comicUpdatedon),
-        serialization: await this.getElement(this._comicSerialization),
+        )
+          .replace(/(\r\n|\n|\r)/g, '')
+          .trim(),
+        rating: await this.getText(this._comicRating),
+        status: await this.getText(this._comicStatus),
+        updatedOn: await this.getText(this._comicUpdatedon),
+        serialization: await this.getText(this._comicSerialization),
         type: {
-          name: await this.getElement(this._comicType)
+          name: await this.getText(this._comicType)
         },
         artist: {
-          name: await this.getElement(this._comicArtist)
+          name: await this.getText(this._comicArtist)
         },
         author: {
-          name: await this.getElement(this._comicAuthor)
+          name: await this.getText(this._comicAuthor)
         },
         genres: comgenres
       };
@@ -150,14 +140,14 @@ export class SeriesPage extends BasePage {
       return comic;
     }
   }
-  public async displayChapter(chapterupdatedon: string): Promise<any> {
+  public async displayChapter(chapterupdatedon: string): Promise<Chapter> {
     try {
       let chapterimgs: { url: string }[] = [];
-      let imgs = await this.getElements(this._chapterImage);
+      let imgs = await this.getOpAllElement(this._chapterImage);
       imgs.map(async (img) =>
         chapterimgs.push({ url: await img.getAttribute('src') })
       );
-      let text = await this.getElement(this._chapterName);
+      let text = await this.getText(this._chapterName);
       let link = await this.findElement(this._chaptercomicSlug);
       let commaIndex = text.indexOf('-'); // Find the index of the comma
       if (commaIndex !== -1) {
@@ -166,8 +156,11 @@ export class SeriesPage extends BasePage {
           url: await this.driver.getCurrentUrl(),
           name: text.slice(0, commaIndex).trim(),
           title: text.slice(commaIndex + 1).trim(),
-          comictitle: await this.getElement(this._chaptercomicTitle),
-          comicslug: (await link.getAttribute('href')).split('/')[4],
+          comic: {
+            title: await this.getText(this._chaptercomicTitle),
+            slug: (await link.getAttribute('href')).split('/')[4]
+          },
+
           updatedOn: chapterupdatedon,
           images: chapterimgs
         };
@@ -177,9 +170,12 @@ export class SeriesPage extends BasePage {
         let link = await this.findElement(this._chaptercomicSlug);
         let chapter = {
           url: await this.driver.getCurrentUrl(),
-          name: await this.getElement(this._chapterName),
-          comictitle: await this.getElement(this._chaptercomicTitle),
-          comicslug: (await link.getAttribute('href')).split('/')[4],
+          name: await this.getText(this._chapterName),
+          comic: {
+            title: await this.getText(this._chaptercomicTitle),
+            slug: (await link.getAttribute('href')).split('/')[4]
+          },
+
           updatedOn: chapterupdatedon,
           images: chapterimgs
         };
@@ -189,7 +185,7 @@ export class SeriesPage extends BasePage {
     } catch (error) {
       console.log(`Error in - ${error}`);
 
-      let text = await this.getElement(this._chapterName);
+      let text = await this.getText(this._chapterName);
       let commaIndex = text.indexOf('-'); // Find the index of the comma
       if (commaIndex !== -1) {
         let link = await this.findElement(this._chaptercomicSlug);
@@ -198,8 +194,11 @@ export class SeriesPage extends BasePage {
           url: await this.driver.getCurrentUrl(),
           name: text.slice(0, commaIndex).trim(),
           title: text.slice(commaIndex + 1).trim(),
-          comictitle: await this.getElement(this._chaptercomicTitle),
-          comicslug: (await link.getAttribute('href')).split('/')[4],
+          comic: {
+            title: await this.getText(this._chaptercomicTitle),
+            slug: (await link.getAttribute('href')).split('/')[4]
+          },
+
           updatedOn: chapterupdatedon
         };
 
@@ -208,9 +207,12 @@ export class SeriesPage extends BasePage {
         let link = await this.findElement(this._chaptercomicSlug);
         let chapter = {
           url: await this.driver.getCurrentUrl(),
-          name: await this.getElement(this._chapterName),
-          comictitle: await this.getElement(this._chaptercomicTitle),
-          comicslug: (await link.getAttribute('href')).split('/')[4],
+          name: await this.getText(this._chapterName),
+          comic: {
+            title: await this.getText(this._chaptercomicTitle),
+            slug: (await link.getAttribute('href')).split('/')[4]
+          },
+
           updatedOn: chapterupdatedon
         };
 
@@ -219,59 +221,105 @@ export class SeriesPage extends BasePage {
     }
   }
 
-  public async parsePage(): Promise<any> {
+  public async getPage(): Promise<any> {
     try {
-      let comics = await this.getElements(this.comicList);
+      let comics = await this.getAllElement(this.comicList);
+      // for (let i = 0; i < comics.slice(1, 2).length; i++) {
       for (let i = 0; i < comics.length; i++) {
         const element = comics[i];
         await element.click();
         let comic = await this.displayComic();
         comicData.push(comic);
-        console.log(comic);
-        let chapters = await this.getElements(this._comicChapters);
+        // console.log(comic)
+        let chapters = await this.getAllElement(this._comicChapters);
+        // for (let i = 1; i < chapters.slice(1, 3).length; i++) {
         for (let i = 1; i < chapters.slice(0, 4).length; i++) {
-          const chapterupdatedon = await this.getElement(
+          const chapterupdatedon = await this.getText(
             By.xpath(
               `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/h3[2]`
             )
           );
-          await this.waitForElementAndClick(
+          await this.clickElement(
             By.xpath(
               `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/div`
             )
           );
-
           let chapter = await this.displayChapter(chapterupdatedon);
           chapterData.push(chapter);
-          console.log(chapter);
+          // console.log(chapter)
           await this.driver.navigate().back();
-          chapters = await this.getElements(this._comicChapters);
+          chapters = await this.getAllElement(this._comicChapters);
         }
         await this.driver.navigate().back();
-        comics = await this.getElements(this.comicList);
+        comics = await this.getAllElement(this.comicList);
       }
-      return new HomePage(this.driver);
+      return {
+        comicData,
+        chapterData
+      };
     } catch (error) {
       console.log('Error: Element not located within the timeout.', error);
-    } finally {
-      if (comicData.length > 0) {
-        // Write comics object to file..
-        fs.writeFileSync('./comics.json', JSON.stringify(comicData, null, 2));
-        console.log(`Comics_count: ${comicData.length}`);
-      } else {
-        console.error('Comics Not Found');
-      }
-      if (chapterData.length > 0) {
-        // Write chapters object to file..
-        fs.writeFileSync(
-          './chapters.json',
-          JSON.stringify(chapterData, null, 2)
-        );
-
-        console.log(`Chapters_count: ${chapterData.length}`);
-      } else {
-        console.error('Chapters Not Found');
-      }
     }
   }
+  public async clickNextButton(): Promise<void> {
+    return await this.clickElement(this._nextButton);
+  }
+  // public async parsePage(): Promise<any> {
+  //   try {
+  //     let comics = await this.getAllElement(this.comicList);
+  //     for (let i = 0; i < comics.slice(1, 2).length; i++) {
+  //       // for (let i = 0; i < comics.length; i++) {
+  //       const element = comics[i];
+  //       await element.click();
+  //       let comic = await this.displayComic();
+  //       comicData.push(comic);
+  //       console.log(comic)
+  //       let chapters = await this.getAllElement(this._comicChapters);
+  //       for (let i = 1; i < chapters.slice(1, 3).length; i++) {
+  //         // for (let i = 1; i < chapters.slice(0, 4).length; i++) {
+  //         const chapterupdatedon = await this.getText(
+  //           By.xpath(
+  //             `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/h3[2]`
+  //           )
+  //         );
+  //         await this.clickElement(
+  //           By.xpath(
+  //             `//div[contains(@class, "pl-4 py-2 border rounded-md group w-full hover:bg-[#343434] cursor-pointer border-[#A2A2A2]/20 relative")][${i}]/a/div`
+  //           )
+  //         );
+  //         let chapter = await this.displayChapter(chapterupdatedon);
+  //         chapterData.push(chapter);
+  //         console.log(chapter)
+  //         await this.driver.navigate().back();
+  //         chapters = await this.getAllElement(this._comicChapters);
+  //       }
+  //       await this.driver.navigate().back();
+  //       comics = await this.getAllElement(this.comicList);
+  //     }
+  //     return new HomePage(this.driver);
+  //   } catch (error) {
+  //     console.log('Error: Element not located within the timeout.', error);
+  //   }
+
+  //   finally {
+  //     if (comicData.length > 0) {
+  //       // Write comics object to file..
+  //       fs.writeFileSync('./comics.json', JSON.stringify(comicData, null, 2));
+  //       console.log(`Comics_count: ${comicData.length}`);
+  //     } else {
+  //       console.error('Comics Not Found');
+  //     }
+  //     if (chapterData.length > 0) {
+  //       // Write chapters object to file..
+  //       fs.writeFileSync(
+  //         './chapters.json',
+  //         JSON.stringify(chapterData, null, 2)
+  //       );
+
+  //       console.log(`Chapters_count: ${chapterData.length}`);
+  //     } else {
+  //       console.error('Chapters Not Found');
+  //     }
+  //   }
+  // }
 }

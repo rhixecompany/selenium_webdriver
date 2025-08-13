@@ -1,12 +1,12 @@
 {
   "name": "crawler",
   "version": "1.0.0",
-  "description": "WebdriverJS POM Example",
-  "main": "./src/test.ts",
+  "description": "WebdriverJS Example",
+  "main": "./scrape.ts",
   "scripts": {
-    "scrape": "npx tsx src/scrape.ts",
-    "test": "mocha --require ts-node/register --timeout 9999999 'src/tests/**/*.ts'",
-    "test:report": "mocha --require ts-node/register  --reporter mochawesome --reporter-options autoOpen=true,reportDir=report,reportFilename=comics-search 'src/tests/**/*.ts'",
+    "scrape": "npx tsx  scrape.ts",
+    "test": "mocha --require ts-node/register --timeout 999999  'test/**/*.ts'",
+    "test:report": "mocha --require ts-node/register --timeout 999999 --colors  --reporter mochawesome --reporter-options autoOpen=true,reportDir=report,reportFilename=comics-search 'test/**/*.ts'",
     "eslint": "eslint . ",
     "eslint:fix": "eslint .  --fix",
     "format": "prettier --write './**/**/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,html}'",

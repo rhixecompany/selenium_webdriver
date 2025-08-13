@@ -3,9 +3,9 @@ export const comicItem =
   "//div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a/div";
 
 export const nextButton =
-  '//div[contains(@class, "flex items-center justify-center py-[15px] bg-[#222222]")]/div/a[2]';
+  'Next';
 // export const nextButton =
-//   "//div[@class='flex items-center justify-center py-[15px] bg-[#222222] ']/a[2]";
+//   '//div[contains(@class, "flex items-center justify-center py-[15px] bg-[#222222]")]/div[contains(@class, "flex items-center justify-center py-[15px] bg-[#222222]")]/a[2]';
 
 // Comic Page
 export const comicTitle = '//span[contains(@class, "text-xl font-bold")]';
@@ -36,8 +36,7 @@ export const comicChapters =
 // Chapter Page
 export const chapterName =
   '//button[contains(@class, "px-3 py-2 dropdown-btn")]/h2';
-export const chapterImage =
-  '//div[contains(@class, "w-full mx-auto center")]/img';
+export const chapterImage = '//img[contains(@class, "object-cover mx-auto")]';
 export const chaptercomicTitle =
   "//div[@class='flex flex-col items-center space-y-2 pt-6 px-5 text-center']/p/a/span";
 export const chaptercomicSlug =

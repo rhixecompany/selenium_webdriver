@@ -13,20 +13,20 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends(
     // 'next/core-web-vitals',
-    // 'next/typescript',
+    'next/typescript',
     'prettier',
     'plugin:tailwindcss/recommended'
   ),
   {
     rules: {
       'no-undef': 'off',
-      'no-unused-vars': 'off',
+      'no-unused-vars': 'error',
       '@typescript-eslint/ban-ts-comment': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-require-imports': 'error',
       'zod/require-strict': 2,
-      'tailwindcss/no-custom-classname': 'off',
-      'tailwindcss/classnames-order': 'off'
+      'tailwindcss/no-custom-classname': 'error',
+      'tailwindcss/classnames-order': 'error'
     },
     plugins: {tailwind, zod}
   }

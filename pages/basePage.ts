@@ -1,5 +1,5 @@
 // pages/basePage.ts
-import {WebDriver, WebElement, By, until} from 'selenium-webdriver';
+import { WebDriver, WebElement, By, until } from 'selenium-webdriver';
 
 export abstract class BasePage {
   protected driver: WebDriver;
@@ -20,6 +20,9 @@ export abstract class BasePage {
 
   protected async clickElement(locator: By): Promise<void> {
     const element = await this.findElement(locator);
+    await element.click();
+  }
+  protected async actionElement(element: WebElement): Promise<void> {
     await element.click();
   }
 
@@ -80,6 +83,7 @@ export abstract class BasePage {
     }
   }
   protected async getOpAllElement(locator: By): Promise<WebElement[]> {
+    await this.driver.wait(until.elementLocated(locator), 2000);
     return await this.driver.findElements(locator);
   }
 }

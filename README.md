@@ -1,117 +1,111 @@
-# Selenium WebDriver Web Scraper
+# selenium_webdriver — Chrome Web Scraper
 
-A Node.js-based Selenium WebDriver project for scraping comic/manga data from Asura Scans website.
+> **Stack:** Node.js 18+ + Selenium | **Type:** CLI Scraper Tool | **Status:** Active
 
-## Overview
+A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium WebDriver 4.x with ChromeDriver for dynamic content scraping. ES modules throughout.
 
-This project provides automated web scraping capabilities using Selenium WebDriver with Chrome. It extracts comic details, chapter information, and generates JSON output files.
+---
 
-## Features
+## Technology Stack
 
-- Headless Chrome browser automation
-- Comic listing page scraping
-- Comic detail page extraction (title, author, artist, genres, description, rating)
-- Chapter listing and content scraping
-- Automatic retry logic for stale elements
-- Multiple utility functions for common Selenium operations
+| Category | Technology |
+|---|---|
+| **Runtime** | Node.js ^18+ |
+| **Language** | JavaScript (ES Modules) |
+| **Browser Automation** | selenium-webdriver 4.34.0 |
+| **Testing** | assert (built-in) |
+| **Formatting** | Prettier ^3.6.2 |
 
-## Requirements
-
-- Node.js 18+
-- Chrome browser installed
-- npm dependencies (see package.json)
-
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/rhixecompany/selenium_webdriver.git
-
-# Navigate to project directory
-cd selenium_webdriver
-
-# Install dependencies
-npm install
-```
-
-## Usage
-
-### Run Main Scraper
-
-```bash
-npm run test
-# or
-node src/scrape.js
-```
-
-This will:
-1. Initialize headless Chrome browser
-2. Navigate to Asura Scans series listing
-3. Scrape comic details and chapters
-4. Output results to `comics.json` and `chapters.json`
-
-### Run Basic Test
-
-```bash
-node src/test1.js
-```
-
-### Code Formatting
-
-```bash
-# Format code
-npm run format
-
-# Check formatting
-npm run format:check
-```
-
-## Project Structure
+## Architecture
 
 ```
 selenium_webdriver/
 ├── src/
-│   ├── utils.js       # Utility functions for Selenium operations
-│   ├── scrape.js     # Main scraping script
-│   ├── scrape2.js    # Alternative scraping script
-│   ├── test.js       # Test script with detailed driver setup
-│   └── test1.js      # Basic Selenium test example
-├── docs/              # Documentation
-├── package.json       # Project dependencies
-└── README.md         # This file
+│   └── scrape.js          # Main scraper entry point
+├── package.json
+└── docs/Project_Architecture/
 ```
 
-## Utility Functions (utils.js)
+## Getting Started
 
-| Function | Description |
-|----------|-------------|
-| `exampleExplicitWait(driver)` | Demonstrates explicit wait patterns |
-| `safeClick(driver, locator, maxRetries)` | Click with stale element retry |
-| `performGet(driver, url)` | Navigate to URL and wait for element |
-| `clickElement(driver, locator, maxRetries)` | Click with retry logic |
-| `clickNormalElement(driver, locator, maxRetries)` | Click without delay |
-| `textElement(driver, locator, maxRetries)` | Get text with retry |
-| `textNormalElement(driver, locator, maxRetries)` | Get text without delay |
-| `textareaElement(driver, locator, maxRetries)` | Get textarea content |
-| `imageElement(driver, locator, maxRetries)` | Get image src attribute |
-| `hrefElement(driver, locator, maxRetries)` | Get href attribute |
-| `textElements(driver, locator, maxRetries)` | Get multiple elements |
+```bash
+# Prerequisites: Node.js 18+, ChromeDriver installed
 
-## Configuration
+# Install dependencies
+npm install
 
-The scraper uses the following Chrome options:
-- Headless mode (`--headless=new`)
-- Window size: 1920x1080
-- No sandbox mode
-- Disabled GPU acceleration
-- Custom user data directory for isolation
+# Run the scraper
+node src/scrape.js
 
-## Output
+# Run test (executes scraper)
+npm test
 
-The scraper generates:
-- `comics.json` - Array of comic objects with details
-- `chapters.json` - Array of chapter objects with image URLs
+# Format code
+npm run format
+npm run format:check
+```
+
+## Key Features
+
+- **Selenium WebDriver 4.x** — Browser automation for dynamic content
+- **ChromeDriver** — Chrome browser automation
+- **Explicit Waits** — `WebDriverWait` with conditions (no sleep-based waits)
+- **Stale Element Handling** — Retry on `StaleElementReferenceException`
+- **Consistent Selectors** — Standardized `By` selector patterns
+- **Proper Cleanup** — `driver.quit()` in `finally` block
+
+## Coding Standards
+
+- **ES Modules**: `"type": "module"` in package.json
+- **camelCase**: Variable and function naming
+- **Prettier**: 2-space indentation
+- **Error Handling**: Try/catch with retries
+
+## Best Practices
+
+### Wait Strategy
+```javascript
+// Explicit WebDriverWait — never use sleep
+await driver.wait(until.elementLocated(By.css('.selector')), 10000);
+```
+
+### Stale Element Handling
+```javascript
+// Retry on stale elements
+async function clickSafely(element) {
+  try {
+    await element.click();
+  } catch (StaleElementReferenceException) {
+    await element.click(); // Retry once
+  }
+}
+```
+
+### Cleanup
+```javascript
+// Always quit driver in finally
+try {
+  // scraping logic
+} finally {
+  await driver.quit();
+}
+```
+
+## Security
+
+- No ChromeDriver or browser profiles in VCS
+- Respect `robots.txt`
+- Configurable polite delays between requests
+- No build step required
+- No deployment configuration
+
+## Notes
+
+- No build step — run directly with Node.js
+- Manual testing via `node src/scrape.js`
+- ChromeDriver must be installed separately (not in VCS)
+- Designed for comics/manga sites
 
 ## License
 
-ISC
+Not specified.

@@ -66,10 +66,12 @@ npm install
 ### Dependencies
 
 **Production:**
+
 - `selenium-webdriver` (4.34.0) - Browser automation framework
 - `assert` (2.1.0) - Assertion library
 
 **Development:**
+
 - `prettier` (^3.6.2) - Code formatter
 - `prettier-plugin-tailwindcss` (^0.6.14) - Tailwind CSS plugin
 - `pretty-quick` (^4.2.2) - Prettier wrapper for quick formatting
@@ -87,6 +89,7 @@ node src/scrape.js
 ```
 
 This command will:
+
 1. Initialize headless Chrome browser
 2. Navigate to Asura Scans series listing
 3. Scrape comic details and chapters from multiple pages
@@ -196,6 +199,7 @@ The main scraping script that automates the complete scraping workflow.
 #### Data Extracted
 
 **Comic Details:**
+
 - Title, slug, serialization
 - Author, artist
 - Rating, status, type
@@ -205,6 +209,7 @@ The main scraping script that automates the complete scraping workflow.
 - Updated date
 
 **Chapter Data:**
+
 - Chapter name, title
 - Page images (array of URLs)
 - Parent comic info
@@ -221,6 +226,7 @@ Test script demonstrating detailed driver configuration using getBinaryPaths for
 ### src/test1.js
 
 Basic Selenium test example demonstrating:
+
 - Driver creation
 - Page navigation
 - Element interaction
@@ -250,6 +256,7 @@ options.excludeSwitches("enable-automation");
 ### Pagination
 
 Default configuration:
+
 - **Start URL:** `https://asuracomic.net/series?page=1`
 - **Total Pages:** 20 (configurable in code)
 - **Chapter Limit:** 3 chapters per comic (configurable)
@@ -257,6 +264,7 @@ Default configuration:
 ### User Data Directory
 
 A temporary user data directory is created for each run to ensure browser isolation:
+
 - Location: System temp directory
 - Cleanup: Automatic after scraper completes
 

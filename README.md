@@ -64,12 +64,14 @@ npm run format:check
 ## Best Practices
 
 ### Wait Strategy
+
 ```javascript
 // Explicit WebDriverWait — never use sleep
 await driver.wait(until.elementLocated(By.css('.selector')), 10000);
 ```
 
 ### Stale Element Handling
+
 ```javascript
 // Retry on stale elements
 async function clickSafely(element) {
@@ -82,6 +84,7 @@ async function clickSafely(element) {
 ```
 
 ### Cleanup
+
 ```javascript
 // Always quit driver in finally
 try {

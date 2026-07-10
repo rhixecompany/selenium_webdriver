@@ -35,4 +35,3 @@ npm run format:check
 - Always close browser sessions with `driver.quit()` in `finally`.
 - Keep selectors and browser setup centralized where possible.
 - Respect target-site limits and avoid hardcoded credentials.
-

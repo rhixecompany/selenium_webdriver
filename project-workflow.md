@@ -28,6 +28,7 @@ npm run format:check     # Check formatting
 ```
 
 ## Adding a New Scraper
+
 1. Create new file in `src/` with camelCase naming
 2. Use `selenium-webdriver` with ES Module imports
 3. Implement explicit waits with `WebDriverWait`

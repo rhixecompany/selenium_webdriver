@@ -13,6 +13,7 @@ async function initializeDriver()
 ```
 
 Sets up Chrome with the following options:
+
 - Headless mode (`--headless=new`)
 - Window size: 1920x1080
 - No sandbox mode
@@ -29,6 +30,7 @@ Sets up Chrome with the following options:
 Scrapes comic links from the series listing page.
 
 **Process:**
+
 1. Finds all comic links using XPath
 2. Iterates through each link
 3. Clicks each link to navigate to detail page
@@ -36,6 +38,7 @@ Scrapes comic links from the series listing page.
 5. Navigates back to listing page
 
 **XPath Selector:**
+
 ```xpath
 //div[@class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 p-4']/a
 ```
@@ -47,6 +50,7 @@ Scrapes comic links from the series listing page.
 Extracts detailed information from a comic's detail page.
 
 **Extracted Fields:**
+
 - `title` - Comic title
 - `slug` - URL slug
 - `serialization` - Serialization info
@@ -61,6 +65,7 @@ Extracts detailed information from a comic's detail page.
 - `updatedOn` - Last update date
 
 **Chapter Processing:**
+
 - Extracts up to 3 latest chapters
 - Navigates to each chapter page
 - Calls `parsePageChapterDetail()` for each chapter
@@ -72,6 +77,7 @@ Extracts detailed information from a comic's detail page.
 Extracts chapter-specific data.
 
 **Extracted Fields:**
+
 - `name` - Chapter name
 - `title` - Chapter title (if available)
 - `images` - Array of page image URLs
@@ -98,9 +104,11 @@ async function automateProcess(url)
 ### Output Files
 
 #### comics.json
+
 Contains array of comic objects with full details.
 
 #### chapters.json
+
 Contains array of chapter objects with page images.
 
 ## Configuration

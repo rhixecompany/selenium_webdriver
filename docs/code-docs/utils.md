@@ -11,11 +11,13 @@ The `utils.js` module provides reusable utility functions for Selenium WebDriver
 Demonstrates explicit wait patterns for element visibility and clickability.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 
 **Returns:** Promise<void>
 
 **Example:**
+
 ```javascript
 await exampleExplicitWait(driver);
 ```
@@ -27,6 +29,7 @@ await exampleExplicitWait(driver);
 Clicks an element with retry logic for stale element references. Includes a 500ms delay between retries.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the element
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -34,6 +37,7 @@ Clicks an element with retry logic for stale element references. Includes a 500m
 **Returns:** Promise<void>
 
 **Example:**
+
 ```javascript
 await safeClick(driver, By.css('.myButtonClass'));
 ```
@@ -45,12 +49,14 @@ await safeClick(driver, By.css('.myButtonClass'));
 Navigates to a URL and waits for a specific element to be located.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `url` - Target URL to navigate to
 
 **Returns:** Promise<void>
 
 **Example:**
+
 ```javascript
 await performGet(driver, 'https://asuracomic.net/series');
 ```
@@ -62,6 +68,7 @@ await performGet(driver, 'https://asuracomic.net/series');
 Clicks an element with retry logic and 500ms delay between retries.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the element
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -75,6 +82,7 @@ Clicks an element with retry logic and 500ms delay between retries.
 Clicks an element without delay between retries.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the element
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -88,6 +96,7 @@ Clicks an element without delay between retries.
 Gets text content from an element with retry logic and 500ms delay.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the element
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -101,6 +110,7 @@ Gets text content from an element with retry logic and 500ms delay.
 Gets text content without delay between retries.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the element
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -114,6 +124,7 @@ Gets text content without delay between retries.
 Gets text content from a textarea element, trimming whitespace and normalizing line endings.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the textarea
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -127,6 +138,7 @@ Gets text content from a textarea element, trimming whitespace and normalizing l
 Gets the `src` attribute from an image element.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the image
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -140,6 +152,7 @@ Gets the `src` attribute from an image element.
 Gets the `href` attribute from a link element.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for the link
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -153,6 +166,7 @@ Gets the `href` attribute from a link element.
 Finds multiple elements and returns them as an array.
 
 **Parameters:**
+
 - `driver` - Selenium WebDriver instance
 - `locator` - By locator for elements
 - `maxRetries` - Maximum retry attempts (default: 3)
@@ -166,6 +180,7 @@ Finds multiple elements and returns them as an array.
 All functions handle `StaleElementReferenceError` by retrying. Other errors are re-thrown to allow caller handling.
 
 **Error Messages:**
+
 - `"Failed to click element after X retries."`
 - `"Failed to get textElement after X retries."`
 - etc.

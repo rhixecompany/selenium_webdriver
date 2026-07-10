@@ -20,10 +20,12 @@ A Node.js Selenium-based web scraper for comics/manga targeting JavaScript-rende
 **Description:** Automated scraping of JavaScript-rendered manga/comic pages using Selenium WebDriver.
 
 **Entry Points:**
+
 - `node src/scrape.js` — main scraping script
 - `node src/scrape2.js` — alternative scraper variant
 
 **Steps:**
+
 1. User runs `node src/scrape.js` or `npm test` (runs scrape.js)
 2. Script initializes ChromeDriver via Selenium WebDriver
 3. Navigates to target manga/comic URL
@@ -35,6 +37,7 @@ A Node.js Selenium-based web scraper for comics/manga targeting JavaScript-rende
 9. Ensures `driver.quit()` in `finally` block
 
 **Sequence Diagram:**
+
 ```
 User                    scrape.js                Selenium/ChromeDriver         Target Website
   |                        |                            |                          |
@@ -69,6 +72,7 @@ User                    scrape.js                Selenium/ChromeDriver         T
 ```
 
 **Error Handling:**
+
 - `StaleElementReferenceException` → retry element lookup up to 3 times
 - Element not found → continue or skip, log warning
 - ChromeDriver not installed → clear error message
@@ -76,6 +80,7 @@ User                    scrape.js                Selenium/ChromeDriver         T
 - `robots.txt` compliance + polite delays between requests
 
 **Test Patterns:**
+
 - Manual testing via `node src/scrape.js`
 - `npm test` configured to run scrape.js as test
 - Consistent `By` selectors for maintainability
@@ -87,10 +92,12 @@ User                    scrape.js                Selenium/ChromeDriver         T
 **Description:** Batch scraping of multiple pages or targets using utility helpers.
 
 **Entry Points:**
+
 - `src/utils.js` — shared utility functions
 - `src/test1.js` — additional scraper variant
 
 **Steps:**
+
 1. Script reads list of target URLs from config
 2. Initializes ChromeDriver with profiles/options
 3. Iterates through targets with polite delays between each
@@ -99,6 +106,7 @@ User                    scrape.js                Selenium/ChromeDriver         T
 6. Cleans up driver resources
 
 **Error Handling:**
+
 - Per-target failure → log error, continue with next target
 - Rate limiting detection → adaptive delay increase
 - Network errors → retry with exponential backoff

@@ -39,17 +39,20 @@ selenium_webdriver/
 ## Architectural Patterns
 
 ### Single-Script Scraper Pattern
+
 - Single entry point (`src/scrape.js`) for all scraping operations
 - ES Modules (`import`/`export`) for modern JavaScript
 - Direct execution via `node src/scrape.js`
 
 ### Reliable Automation Patterns
+
 1. **Explicit WebDriverWait** — Never use `sleep()`; always use `WebDriverWait` with expected conditions
 2. **Retry on StaleElement** — Catch `StaleElementReferenceException` and retry
 3. **Consistent selectors** — Use `By` selectors consistently for element location
 4. **Cleanup in finally** — Always call `driver.quit()` in `finally` block for resource cleanup
 
 ### Polite Scraping
+
 - Respect `robots.txt`
 - Polite delays between requests
 - User-agent rotation support

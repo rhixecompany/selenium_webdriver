@@ -6,3 +6,7 @@ comics.json
 chapters.json
 comics-*.json
 chapters-*.json
+# repo-management audit fix
+.env
+.env*
+.DS_Store

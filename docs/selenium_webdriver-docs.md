@@ -156,7 +156,7 @@ Provides reusable utility functions for Selenium WebDriver operations. All funct
 #### Functions
 
 | Function | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | `exampleExplicitWait(driver)` | Demonstrates explicit wait patterns |
 | `safeClick(driver, locator, maxRetries)` | Click with stale element retry (500ms delay) |
 | `performGet(driver, url)` | Navigate to URL and wait for element |

@@ -9,7 +9,7 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 ## Technology Stack
 
 | Category | Technology |
-|---|---|
+| --- | --- |
 | **Runtime** | Node.js ^18+ |
 | **Language** | JavaScript (ES Modules) |
 | **Browser Automation** | selenium-webdriver 4.34.0 |

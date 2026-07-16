@@ -12,7 +12,7 @@
 ## Technology Stack Details
 
 | Category | Technology |
-|---|---|
+| --- | --- |
 | Runtime | Node.js 18+ |
 | Language | JavaScript (ES Modules) |
 | Browser Automation | Selenium WebDriver 4.x |

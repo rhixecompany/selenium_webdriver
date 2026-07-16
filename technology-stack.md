@@ -27,7 +27,7 @@ Node.js-based Selenium WebDriver project for Chrome browser automation to extrac
 ## Scripts
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | src/scrape.js | Main scraper |
 | src/scrape2.js | Secondary scraper |
 | src/test.js | Test script |

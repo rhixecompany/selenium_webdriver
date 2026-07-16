@@ -2,111 +2,92 @@
 
 ## Project: selenium_webdriver
 
-**Type:** Browser automation / scraping utility
-**Tech Stack:** Node.js 18+, selenium-webdriver 4.x, ChromeDriver, webdriver-manager, Prettier
-**Status:** Consolidation target (patterns extracted → rhixecompany-comics)
+**Type:** Browser automation / Node.js scraping utility (comics/manga)
+**Tech Stack:** Node.js 18+, selenium-webdriver 4.x, ChromeDriver via Selenium Manager, ES Modules
+**Research Date:** 2026-07-16
 
 ---
 
-## Similar Projects
+## Similar Projects & References
 
-| Project | URL | Why Relevant |
-|---------|-----|--------------|
-| Selenium Scraping Examples | <https://github.com/HasData/selenium-scraping> | Driver setup, waits, proxies, Grid |
-| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth> | Stealth evasion alternative |
-| Selenium Node.js guide | <https://scrape.do/blog/selenium-nodejs> | Node.js Selenium scraping |
+Key references: [Selenium Scraping Examples](https://github.com/HasData/selenium-scraping), [Selenium Node.js Guide](https://scrape.do/blog/selenium-nodejs), [Playwright](https://playwright.dev) (2-3× faster), [Selenium Grid](https://www.selenium.dev/documentation/grid/), [WebDriver BiDi](https://www.selenium.dev/documentation/webdriver/bidi).
 
 ---
 
 ## Key Findings
 
-### Selenium 4 Detection & Stealth (2026)
-- Detection vectors: `navigator.webdriver`, UA inconsistencies, behavior patterns
-- Override `navigator.webdriver` via CDP: `Page.addScriptToEvaluateOnNewDocument`
-- **Playwright is harder to detect and 2-3× faster** — recommended for new scrapers
-- Headless mode increasingly detected; use `headless: "new"` for better stealth
+**Selenium 4 is the mainstream default in 2026.** Selenium 4.x stable leads adoption; teams selectively pilot **Selenium 5** previews for richer BiDi. 4.x brings W3C WebDriver, Grid 4 scalability, improved driver management. (Source: 2026 Selenium version analysis.)
 
-### Selenium Manager (Zero-Config)
-- **Selenium Manager (4.6+)** replaces `webdriver-manager` — built-in, zero-config, written in Rust
-- Auto-detects browser version, resolves correct driver, downloads from Chrome for Testing
-- Cache at `~/.cache/selenium` (Linux/macOS) or `%USERPROFILE%\\.cache\\selenium` (Windows)
-- **Migration**: Remove WebDriverManager dependency and all `.setup()` calls
-- Offline mode: `SE_OFFLINE=true` + pre-warmed cache
+**WebDriver BiDi is now the official CDP replacement** (verified at selenium.dev/docs/webdriver/bidi). W3C-standard bidirectional protocol: subscribe to live browser events — network requests, console messages, log entries, new contexts — across Chrome, Edge, Firefox (Safari aligning). CDP is "temporary until BiDi is implemented." Enable via `options.setCapability('webSocketUrl', true)` (JS) / `options.enable_bidi = True` (Python). New code should target BiDi: console capture, JS error listening, network interception, request mocking, basic auth.
 
-### Node.js + ES Modules Setup
-- ES modules: `"type": "module"` in package.json; explicit `.js` extensions required
-- Selenium 4 W3C standard: relative locators, new window/tab APIs, CDP integration
-- Node.js >= 20 required for latest selenium-webdriver
+**Selenium Manager (zero-config)** — replaces `webdriver-manager` (4.6+). Auto-detects browser, resolves matching driver, downloads from Chrome for Testing. No `.setup()` calls. Rust-based. Offline via `SE_OFFLINE=true`. Migration: remove webdriver-manager; `new Builder().forBrowser('chrome').build()` works automatically.
 
----
+**Headless mode** — `headless()` removed in 4.10.0. Chrome 109+ supports `--headless=new` (full browser, stealthier) vs legacy `--headless` (minimal). Set `options.addArguments('--headless=new')`.
 
-## Cheatsheets & Quick Reference
-
-| Topic | Resource | Type |
-|-------|----------|------|
-| Selenium 4 Manager | <https://www.selenium.dev/documentation/webdriver/drivers/manager> | Guide |
-| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra> | Stealth plugin |
+**Detection & stealth (2026)** — vectors: `navigator.webdriver`, plugin counts, UA/language mismatches, missing `chrome.runtime`, behaviour. Mitigations: BiDi/CDP override of `navigator.webdriver`, `--headless=new`, rotate UAs, realistic 500–1500ms delays. **Playwright recommended** for new scrapers — harder to detect, 2–3× faster.
 
 ---
 
 ## Best Practices
-
-1. **Selenium Manager** — zero-config driver management; remove `webdriver-manager`
-2. **Playwright for new scrapers** — 2-3× faster, harder to detect, multi-browser
-3. **CDP override** — patch `navigator.webdriver` for stealth
-4. **Explicit waits** — `WebDriverWait` with expected conditions, not fixed sleeps
-5. **ES modules** — `"type": "module"` for modern Node.js compatibility
+1. **Explicit waits** — `WebDriverWait` with `until.elementLocated()` / `until.elementIsVisible()`, never fixed `sleep()`
+2. **Resource blocking** — block images/CSS/fonts via BiDi/CDP network interception for speed
+3. **Cleanup** — always `driver.quit()` in `finally` block
+4. **StaleElement retry** — re-query element + retry 3× with 500ms delay
+5. **Page Object Model** — organise selectors into page classes
+6. **Concurrency throttle** — use `p-limit` to cap parallel browser sessions
 
 ---
 
 ## Common Pitfalls
 
-| Pitfall | Impact | Avoidance |
-|---------|--------|-----------|
-| Selenium detection | Site blocks | CDP override + Playwright migration |
-| Driver version mismatch | Runtime errors | Selenium Manager auto-resolution |
-| Fixed sleep waits | Flaky, slow tests | `WebDriverWait` with expected conditions |
-| webdriver-manager dependency | Deprecated pattern | Selenium Manager (built-in since 4.6) |
+| Pitfall | Solution |
+|---------|----------|
+| StaleElementReferenceException | Re-query + retry loop (3 attempts) |
+| Selenium detection | BiDi/CDP override or migrate to Playwright |
+| Driver version mismatch | Selenium Manager auto-fixes |
+| Fixed `sleep()` | WebDriverWait + expected conditions |
+| No `driver.quit()` | try/finally cleanup |
+| webdriver-manager dep | Remove; Selenium Manager since 4.6 |
 
 ---
 
-## Performance
-
-1. **Playwright over Selenium** — 2-3× faster for same tasks
-2. **Headless "new" mode** — better stealth, comparable performance to old headless
-3. **Selenium Grid** — distributed scraping across multiple nodes
-4. **Connection reuse** — single driver session for batch operations
-5. **Chrome for Testing** — pinned versions for reproducible CI
+## Performance Tips
+1. **Playwright** — 2-3× faster; consider migrating new scrapers
+2. **Block resources** — intercept images/CSS/fonts for major speedup
+3. **Connection reuse** — single session for batch operations
+4. **Selenium Grid** — `java -jar selenium-server-4.x.x.jar standalone` for distributed scraping
+5. **Chrome for Testing** — pinned versions for reproducible builds
+6. **Low implicit wait** (~2s) — lean on explicit waits instead
 
 ---
 
 ## Security
-
-1. **Never hardcode credentials** — environment variables for all secrets
-2. **Proxy rotation** — avoid IP-based blocking for large-scale scraping
-3. **Respect robots.txt** — legal compliance for web scraping
-4. **Rate limiting** — `page.setDefaultTimeout` and request delays
-5. **Session isolation** — separate browser contexts per target site
+1. **Environment variables** for all secrets — never hardcode
+2. **Proxy rotation** via `--proxy-server` for large-scale scraping
+3. **Respect robots.txt** — legal compliance
+4. **Rate limiting** — polite 2s+ delays, throttle concurrency
+5. **BiDi event subscriptions** — prefer cross-browser BiDi over Chrome-only CDP
 
 ---
 
-## Related Projects (in workspace)
+## Related Projects
 
-- **Django-Scrapy-Selenium** — shared scraping patterns; Python alternative
-- **rhixecompany-comics** — consolidation target; inherits browser automation patterns
+| Project | Relevance |
+|---------|-----------|
+| rhixecompany-comics | Selenium used in its Scrapy scraping pipeline |
+| Python-projects | Standalone script + uv dependency patterns |
+| playwright (alt) | Faster, stealthier successor to evaluate |
 
 ---
 
 ## Resources
 
-| Resource | URL | Description |
-|----------|-----|-------------|
-| Selenium 4 Docs | <https://www.selenium.dev/documentation> | Browser automation |
-| Playwright | <https://playwright.dev> | Modern browser automation |
-| Scrapy + Playwright | <https://scrapy-plugins.github.io/scrapy-playwright> | Scrapy integration |
+| Resource | URL |
+|----------|-----|
+| WebDriver BiDi docs | https://www.selenium.dev/documentation/webdriver/bidi |
+| Selenium Grid | https://www.selenium.dev/documentation/grid/ |
+| Selenium Node.js Guide | https://scrape.do/blog/selenium-nodejs |
+| Playwright | https://playwright.dev |
+| Selenium Scraping Examples | https://github.com/HasData/selenium-scraping |
 
-### Research Methodology
-- **Web search:** web_search (2026 Selenium detection patterns)
-- **Documentation:** web_extract (Selenium Manager, Playwright docs)
-- **Tool comparison:** Selenium vs Playwright vs Puppeteer benchmarks
-- **Last verified:** 2026-07-16
+**Methodology:** 8 web searches (Selenium 4/5 2026, BiDi, Selenium Manager, headless, detection) + selenium.dev BiDi doc extraction. BiDi/Manager claims verified (2026-07-16).

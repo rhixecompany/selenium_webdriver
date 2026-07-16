@@ -22,7 +22,7 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 ### Languages & Runtimes
 
 | Technology | Version | Usage |
-|---|---|---|
+| --- | --- | --- |
 | JavaScript (ES Modules) | — | Primary language |
 | Node.js | ^18+ | JavaScript runtime |
 | npm | — | Package manager |
@@ -30,7 +30,7 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 ### Dependencies
 
 | Dependency | Version | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | selenium-webdriver | 4.34.0 | Browser automation |
 | assert | 2.1.0 | Testing assertions |
 
@@ -53,7 +53,7 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 ## Key Scripts
 
 | Script | Description |
-|---|---|
+| --- | --- |
 | `npm test` | Run scraper (`node src/scrape.js`) |
 | `npm run format` | Prettier formatting |
 | `npm run format:check` | Format checking |
@@ -87,7 +87,7 @@ selenium_webdriver/
 ## Patterns
 
 | Pattern | Implementation |
-|---|---|
+| --- | --- |
 | Wait Strategy | `WebDriverWait` with explicit conditions |
 | Error Handling | Retry on `StaleElementReferenceException` |
 | Selectors | Consistent `By` (CSS/XPath) |

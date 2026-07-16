@@ -12,137 +12,31 @@
 
 | Project | URL | Why Relevant |
 |---------|-----|--------------|
-| Selenium Scraping Examples | <https://github.com/HasData/selenium-scraping> | driver setup, waits, proxies, Grid |
-| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth> | stealth evasion alternative |
-| Headless Browsers List | <https://github.com/dhamaniasad/HeadlessBrowsers> | comparison of all headless browsers |
+| Selenium Scraping Examples | <https://github.com/HasData/selenium-scraping> | Driver setup, waits, proxies, Grid |
+| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth> | Stealth evasion alternative |
 | Selenium Node.js guide | <https://scrape.do/blog/selenium-nodejs> | Node.js Selenium scraping |
 
 ---
 
-## Key Findings (Updated 2026)
+## Key Findings
 
-### Selenium 4 Detection (2026)
-
-- Detection vectors: `navigator.webdriver`, UA inconsistencies, behavior
-- `navigator.webdriver = true` detectable — override via CDP: `Page.addScriptToEvaluateOnNewDocument`
+### Selenium 4 Detection & Stealth (2026)
+- Detection vectors: `navigator.webdriver`, UA inconsistencies, behavior patterns
+- Override `navigator.webdriver` via CDP: `Page.addScriptToEvaluateOnNewDocument`
+- **Playwright is harder to detect and 2-3× faster** — recommended for new scrapers
 - Headless mode increasingly detected; use `headless: "new"` for better stealth
-- **Playwright is harder to detect and 2-3x faster; evaluate migration for new scrapers**
 
-### Node.js Selenium Setup (2026)
+### Selenium Manager (Zero-Config)
+- **Selenium Manager (4.6+)** replaces `webdriver-manager` — built-in, zero-config, written in Rust
+- Auto-detects browser version, resolves correct driver, downloads from Chrome for Testing
+- Cache at `~/.cache/selenium` (Linux/macOS) or `%USERPROFILE%\\.cache\\selenium` (Windows)
+- **Migration**: Remove WebDriverManager dependency and all `.setup()` calls
+- Offline mode: `SE_OFFLINE=true` + pre-warmed cache
 
-- `selenium-webdriver` NPM package; ChromeDriver must match Chrome version exactly
-- **Selenium Manager (4.6+)** — built-in, zero-config driver manager written in Rust, bundled inside Selenium bindings. Automatically detects browser version, resolves correct driver, downloads from official endpoints (Chrome for Testing), caches at `~/.cache/selenium` (Linux/macOS) or `%USERPROFILE%\.cache\selenium` (Windows). **Replaces `webdriver-manager`** for most teams.
+### Node.js + ES Modules Setup
 - ES modules: `"type": "module"` in package.json; explicit `.js` extensions required
 - Selenium 4 W3C standard: relative locators, new window/tab APIs, CDP integration
 - Node.js >= 20 required for latest selenium-webdriver
-
-### ChromeDriver Management & Version Pinning (2026)
-
-- **Selenium Manager** is now the default — no setup code needed. First run auto-downloads matching driver.
-- **Cache**: `~/.cache/selenium` (Linux/macOS) / `%USERPROFILE%\.cache\selenium` (Windows) — shared across projects. Relocate via `SE_CACHE_PATH` env var for CI cache sharing.
-- **Offline mode**: Set `SE_OFFLINE=true` + pre-warmed cache (`SE_CACHE_PATH`) for air-gapped CI.
-- **Proxy**: Respects `HTTPS_PROXY`/`HTTP_PROXY` env vars; also `--proxy` CLI flag and `SE_HTTP_PROXY`.
-- **Pinning**: Force browser version via `options.setBrowserVersion("125")` or CLI `--browser-version 125` — Selenium Manager resolves matching driver + downloads browser via Chrome for Testing if needed.
-- **Debug**: `selenium-manager --browser chrome --debug` prints detected browser, resolved driver, download URL, cache hits/misses.
-- **Disable telemetry**: `SE_AVOID_STATS=true` for locked-down CI.
-- **Migration from WebDriverManager**: Remove dependency and all `WebDriverManager.chromedriver().setup()` calls — no longer needed.
-
-### Selenium vs Playwright vs Puppeteer for Comic Scraping (2026)
-
-| Factor | Selenium | Playwright | Puppeteer |
-|--------|----------|------------|-----------|
-| **Detection resistance** | Moderate (needs stealth plugins) | High (auto-waits, better fingerprint) | Moderate (CDP-based) |
-| **Speed** | Baseline | **2-3x faster** | Fast (Chrome-only) |
-| **Cross-browser** | Chrome, Firefox, Safari, Edge | **Chromium, Firefox, WebKit** | Chrome/Firefox only |
-| **Languages** | JS, Python, Java, C#, Ruby | **JS/TS, Python, Java, .NET** | JS/TS only |
-| **Stealth plugins** | `undetected-chromedriver` (Python), `selenium-stealth` | `playwright-extra` + stealth plugin | `puppeteer-extra-plugin-stealth` |
-| **Comic scraping fit** | Legacy codebases, multi-lang teams | **Best for new scrapers** | Quick Chrome-only scripts |
-| **CDP access** | Yes (BiDi in Selenium 4) | Native CDP | Native CDP |
-| **Auto-waits** | Manual (WebDriverWait) | **Built-in** | Manual |
-| **Proxy support** | Manual config | **Built-in context proxies** | Manual |
-
-**Recommendation for comic scraping 2026**: 
-- **New projects**: Playwright + `playwright-extra` stealth + residential proxies
-- **Existing Selenium codebase**: Add `undetected-chromedriver` (Python) or `selenium-stealth` (Node) + Selenium Manager for driver management
-- **Hard targets (Cloudflare, etc.)**: Bright Data Scraping Browser or Apify + residential proxies
-
-### Headless Chrome Scraping Anti-Detection Techniques (2026)
-
-**Layer 1: IP Reputation**
-- Residential/ISP proxies (Bright Data, IPRoyal, Oxylabs) — datacenter IPs flagged
-- Sticky sessions for logged-in state; rotate per request for stateless
-
-**Layer 2: TLS Fingerprint (JA3/JA4)**
-- Selenium uses browser's TLS stack — OK when driving real Chrome
-- Avoid raw HTTP clients (`requests`, `axios`, `fetch`) for protected targets
-
-**Layer 3: Browser Fingerprint**
-- `navigator.webdriver = true` → override via CDP: `Page.addScriptToEvaluateOnNewDocument({ source: "Object.defineProperty(navigator, 'webdriver', { get: () => undefined })" })`
-- Headless leaks: empty `navigator.plugins`, canvas/WebGL differences, missing Chrome runtime
-- **Fixes**: `headless: "new"` (Chrome 109+), `--disable-blink-features=AutomationControlled`, stealth plugins
-- **Node stealth**: `selenium-stealth` npm package patches common vectors
-- **Testing**: `bot.sannysoft.com`, `browserleaks.com` to validate fingerprint
-
-**Layer 4: Behavioral Patterns**
-- Random delays (1-5s) between requests; avoid burst patterns
-- Human-like mouse movements, scrolling, click coordinates
-- Session reuse for batch scraping (single browser session)
-
-**Layer 5: CAPTCHA**
-- 2Captcha / Capsolver APIs for DIY
-- Bright Data Scraping Browser: auto-solves CAPTCHAs
-
-**Cloudflare Bypass (2026 ranking)**:
-1. Bright Data Scraping Browser (managed, high success)
-2. Playwright + stealth plugin + residential proxy (medium-high)
-3. `undetected-chromedriver` (Selenium, medium)
-4. Raw HTTP clients — **does not work**
-
-### Node.js ES Modules + selenium-webdriver Project Structure (2026)
-
-```text
-selenium-webdriver/
-├── package.json          # "type": "module", "main": "src/index.js"
-├── .prettierrc           # 2-space indent, single quotes
-├── src/
-│   ├── index.js          # entry point
-│   ├── config/
-│   │   ├── browser.js    # ChromeOptions builder (headless, stealth, proxy)
-│   │   └── selectors.js  # By locators as constants
-│   ├── utils/
-│   │   ├── driver.js     # Builder + Selenium Manager + cleanup
-│   │   ├── waits.js      # WebDriverWait wrappers (explicit waits only)
-│   │   └── stealth.js    # CDP script injection for anti-detection
-│   ├── pages/
-│   │   └── comicPage.js  # Page Object pattern
-│   └── scrapers/
-│       └── comicScraper.js
-├── tests/
-└── .gitignore            # .cache/selenium/, node_modules/, *.log
-```
-
-**Key ES Module patterns**:
-- `import { Builder, By, until } from 'selenium-webdriver'`
-- `import chrome from 'selenium-webdriver/chrome.js'` (`.js` extension required)
-- Dynamic `import()` for optional deps (e.g., stealth plugin)
-- Top-level `await` in entry point
-- `node:` prefix for built-ins: `import { fileURLToPath } from 'node:url'`
-
-### Selenium Grid vs Local WebDriver for Scraping Scale (2026)
-
-| Factor | Local WebDriver | Selenium Grid / Selenoid |
-|--------|-----------------|--------------------------|
-| **Setup** | Zero config (Selenium Manager) | Hub + nodes / K8s / Docker |
-| **Parallelism** | Limited by CPU/RAM (1 browser ~200-500MB) | Horizontal scale across machines |
-| **Maintenance** | None | Infrastructure ops |
-| **Best for** | < 5 concurrent, dev/small batches | 10+ concurrent, CI, long-running |
-| **Cloud alternatives** | — | Browserless, BrowserStack, Sauce Labs, Bright Data Scraping Browser |
-| **Selenoid** | — | Lightweight Go-based Grid alternative; auto-scales browsers in containers |
-
-**Recommendation**: 
-- Start local with Selenium Manager + session reuse (single browser, multiple tabs/pages)
-- Move to **Browserless** or **Bright Data Scraping Browser** for cloud scale — no Grid infra to manage
-- Selenium Grid / Selenoid only if you need on-prem control or have existing Grid investment
 
 ---
 
@@ -150,88 +44,69 @@ selenium-webdriver/
 
 | Topic | Resource | Type |
 |-------|----------|------|
-| Selenium JS docs | <https://www.selenium.dev/documentation> | Official docs |
-| Selenium waits | <https://www.selenium.dev/documentation/webdriver/waits> | Official guide |
-| Selenium Node.js guide | <https://scrape.do/blog/selenium-nodejs> | Tutorial |
-| Headless browsers | <https://github.com/dhamaniasad/HeadlessBrowsers> | Comparison |
-| Selenium Manager guide | <https://qaskills.sh/blog/selenium-manager-4-6-driver-management-2026-guide> | 2026 reference |
-| Anti-detection 2026 | <https://use-apify.com/blog/web-scraping-anti-detection-2026> | Comprehensive guide |
-| Selenium JS API | <https://www.selenium.dev/selenium/docs/api/javascript> | API reference |
+| Selenium 4 Manager | <https://www.selenium.dev/documentation/webdriver/drivers/manager> | Guide |
+| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra> | Stealth plugin |
 
 ---
 
-## Best Practices (Updated 2026)
+## Best Practices
 
-1. **Explicit waits everywhere** — `driver.wait(until.elementLocated(By.css('.foo')), 10000)`; never `sleep()`
-2. **Store locators, not elements** — cache `By` selectors; re-find just-in-time to avoid `StaleElementReferenceException`
-3. **`driver.quit()` in `finally`** — always cleanup; prevent zombie Chrome processes
-4. **Use Selenium Manager (4.6+)** — avoid ChromeDriver version mismatch; no `webdriver-manager` needed
-5. **Honor robots.txt** — parse before session; 2s+ polite delays between requests
-6. **Headless stealth** — `headless: "new"`, `--disable-blink-features=AutomationControlled`, CDP script to hide `navigator.webdriver`
-7. **Session reuse** — single browser session for batch scrape; navigate between pages
-8. **Page load strategy** — `pageLoadStrategy: 'eager'` (don't wait for full load)
-9. **Proxy rotation** — residential proxies per session/request for production
-10. **Legal compliance** — check ToS; don't bypass auth or scrape copyrighted content
+1. **Selenium Manager** — zero-config driver management; remove `webdriver-manager`
+2. **Playwright for new scrapers** — 2-3× faster, harder to detect, multi-browser
+3. **CDP override** — patch `navigator.webdriver` for stealth
+4. **Explicit waits** — `WebDriverWait` with expected conditions, not fixed sleeps
+5. **ES modules** — `"type": "module"` for modern Node.js compatibility
 
 ---
 
-## Common Pitfalls (Updated 2026)
+## Common Pitfalls
 
 | Pitfall | Impact | Avoidance |
 |---------|--------|-----------|
-| ChromeDriver version mismatch | scraper breaks | **Use Selenium Manager (built-in)** |
-| `navigator.webdriver = true` | anti-bot detection | Override via CDP `Page.addScriptToEvaluateOnNewDocument` |
-| Headless mode detection | blocking | Use `headless: "new"` + stealth flags |
-| No `await` on async ops | race conditions | Always `await`; no implicit promise handling |
-| Memory leaks | zombie Chrome | `driver.quit()` in `finally` |
-| Stale element refs | flaky tests | Store `By` locators; re-find before each action |
-| Hardcoded sleeps | slow, flaky | Explicit waits with expected conditions only |
-| Datacenter proxies | immediate blocks | Residential/ISP proxies for production |
+| Selenium detection | Site blocks | CDP override + Playwright migration |
+| Driver version mismatch | Runtime errors | Selenium Manager auto-resolution |
+| Fixed sleep waits | Flaky, slow tests | `WebDriverWait` with expected conditions |
+| webdriver-manager dependency | Deprecated pattern | Selenium Manager (built-in since 4.6) |
 
 ---
 
-## Performance (Updated 2026)
+## Performance
 
-1. **Selenium Grid / Selenoid** — parallel scraping across multiple machines
-2. **`pageLoadStrategy: 'eager'`** — don't wait for full page load
-3. **Session reuse** — single browser session for batch scrape
-4. **Headless flags** — `--disable-dev-shm-usage`, `--disable-extensions`, `--disable-images`, `--disable-gpu`
-5. **Selenium Manager cache** — warm cache in CI (`SE_CACHE_PATH`) for instant driver resolution
-6. **Playwright migration** — 2-3x speedup for new projects; native parallelism, auto-waits
+1. **Playwright over Selenium** — 2-3× faster for same tasks
+2. **Headless "new" mode** — better stealth, comparable performance to old headless
+3. **Selenium Grid** — distributed scraping across multiple nodes
+4. **Connection reuse** — single driver session for batch operations
+5. **Chrome for Testing** — pinned versions for reproducible CI
 
 ---
 
-## Security (Updated 2026)
+## Security
 
-1. **Never commit ChromeDriver** — Selenium Manager handles; `.gitignore` `.cache/selenium/`
-2. **Respect robots.txt** — `Crawl-Delay` + 2s+ polite delays
-3. **Proxy rotation** — residential proxies for production scrapers
-4. **Rate limiting** — random delays 1-5s; avoid aggressive concurrent requests
-5. **Legal compliance** — check ToS; don't bypass auth or scrape copyrighted content
-6. **CVE awareness** — ChromeDriver CVEs (e.g., CVE-2026-8000); keep Chrome + Selenium updated
-7. **Disable telemetry** — `SE_AVOID_STATS=true` in locked-down CI
+1. **Never hardcode credentials** — environment variables for all secrets
+2. **Proxy rotation** — avoid IP-based blocking for large-scale scraping
+3. **Respect robots.txt** — legal compliance for web scraping
+4. **Rate limiting** — `page.setDefaultTimeout` and request delays
+5. **Session isolation** — separate browser contexts per target site
 
 ---
 
 ## Related Projects (in workspace)
 
-- **Python-projects** — browser automation patterns
-- **Django-Scrapy-Selenium** — shared Selenium + Celery automation concerns
-- **rhixecompany-comics** — target where scraping utilities should migrate
+- **Django-Scrapy-Selenium** — shared scraping patterns; Python alternative
+- **rhixecompany-comics** — consolidation target; inherits browser automation patterns
 
 ---
 
-## Resources (Updated 2026)
+## Resources
 
 | Resource | URL | Description |
 |----------|-----|-------------|
-| Selenium docs | <https://www.selenium.dev/documentation> | Browser automation docs |
-| Selenium waits | <https://www.selenium.dev/documentation/webdriver/waits> | Wait patterns |
-| Node.js best practices | <https://github.com/goldbergyoni/nodebestpractices> | Node.js best practices |
-| Puppeteer Stealth | <https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth> | Stealth evasion |
-| Selenium Manager 2026 guide | <https://qaskills.sh/blog/selenium-manager-4-6-driver-management-2026-guide> | Driver management deep dive |
-| Anti-detection 2026 | <https://use-apify.com/blog/web-scraping-anti-detection-2026> | Layered anti-bot bypass |
-| Selenium JS API | <https://www.selenium.dev/selenium/docs/api/javascript> | Official JS bindings API |
-| Selenium 4 upgrade | <https://www.selenium.dev/documentation/webdriver/troubleshooting/upgrade_to_selenium_4> | Migration guide |
-| Playwright vs Selenium | <https://www.browserless.io/blog/playwright-vs-selenium-browser-automation-comparison> | 2026 comparison |
-| Headless detection signals | <https://alterlab.io/blog/why-headless-browser-gets-detected-how-to-fix> | Detection vectors & fixes |
+| Selenium 4 Docs | <https://www.selenium.dev/documentation> | Browser automation |
+| Playwright | <https://playwright.dev> | Modern browser automation |
+| Scrapy + Playwright | <https://scrapy-plugins.github.io/scrapy-playwright> | Scrapy integration |
+
+### Research Methodology
+- **Web search:** web_search (2026 Selenium detection patterns)
+- **Documentation:** web_extract (Selenium Manager, Playwright docs)
+- **Tool comparison:** Selenium vs Playwright vs Puppeteer benchmarks
+- **Last verified:** 2026-07-16

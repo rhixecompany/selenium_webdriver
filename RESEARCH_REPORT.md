@@ -13,30 +13,31 @@
 | Project | URL | Why Relevant |
 |---------|-----|--------------|
 | Selenium Scraping Examples | <https://github.com/HasData/selenium-scraping> | Driver setup, waits, proxies, Grid |
-| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth> | Stealth evasion alternative |
-| Selenium Node.js guide | <https://scrape.do/blog/selenium-nodejs> | Node.js Selenium scraping |
+| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra> | Stealth evasion alternative |
 
 ---
 
 ## Key Findings
 
-### Selenium 4 Detection & Stealth (2026)
+### Selenium vs Playwright (2026 Comparison)
+- **Playwright** is 2-3× faster, harder to detect, multi-browser (Chromium + Firefox + WebKit)
+- Selenium supports wider browser/browser-version range (including legacy)
+- Playwright's architecture (direct browser protocol) vs Selenium (WebDriver HTTP) — Playwright wins on speed, reliability
+- **Recommendation for new scrapers:** Playwright; Selenium for enterprise/legacy compatibility
+
+### Selenium Manager (Zero-Config, 4.6+)
+- Built-in Selenium Manager replaces `webdriver-manager` — written in Rust, auto-detects browser version
+- Cache at `~/.cache/selenium` (Linux/macOS) or `%USERPROFILE%\.cache\selenium` (Windows)
+- **Migration:** Remove WebDriverManager dependency and `.setup()` calls
+
+### Detection & Stealth
 - Detection vectors: `navigator.webdriver`, UA inconsistencies, behavior patterns
-- Override `navigator.webdriver` via CDP: `Page.addScriptToEvaluateOnNewDocument`
-- **Playwright is harder to detect and 2-3× faster** — recommended for new scrapers
+- Override via CDP: `Page.addScriptToEvaluateOnNewDocument`
 - Headless mode increasingly detected; use `headless: "new"` for better stealth
 
-### Selenium Manager (Zero-Config)
-- **Selenium Manager (4.6+)** replaces `webdriver-manager` — built-in, zero-config, written in Rust
-- Auto-detects browser version, resolves correct driver, downloads from Chrome for Testing
-- Cache at `~/.cache/selenium` (Linux/macOS) or `%USERPROFILE%\\.cache\\selenium` (Windows)
-- **Migration**: Remove WebDriverManager dependency and all `.setup()` calls
-- Offline mode: `SE_OFFLINE=true` + pre-warmed cache
-
-### Node.js + ES Modules Setup
-- ES modules: `"type": "module"` in package.json; explicit `.js` extensions required
-- Selenium 4 W3C standard: relative locators, new window/tab APIs, CDP integration
-- Node.js >= 20 required for latest selenium-webdriver
+### WebDriver BiDi (2026 Standard)
+- Selenium 4 moving toward bidirectional protocol to match Playwright's capabilities
+- Still maturing; Playwright's auto-waiting gives better DX today
 
 ---
 
@@ -45,7 +46,8 @@
 | Topic | Resource | Type |
 |-------|----------|------|
 | Selenium 4 Manager | <https://www.selenium.dev/documentation/webdriver/drivers/manager> | Guide |
-| Puppeteer Extra Stealth | <https://github.com/berstend/puppeteer-extra> | Stealth plugin |
+| Selenium vs Playwright | <https://www.browserstack.com/guide/playwright-vs-selenium> | Comparison |
+| WebDriver BiDi | <https://www.selenium.dev/documentation/webdriver/bidirectional> | Spec |
 
 ---
 
@@ -73,7 +75,7 @@
 ## Performance
 
 1. **Playwright over Selenium** — 2-3× faster for same tasks
-2. **Headless "new" mode** — better stealth, comparable performance to old headless
+2. **WebDriver BiDi** — improving cross-browser performance in Selenium 4.x
 3. **Selenium Grid** — distributed scraping across multiple nodes
 4. **Connection reuse** — single driver session for batch operations
 5. **Chrome for Testing** — pinned versions for reproducible CI
@@ -103,10 +105,9 @@
 |----------|-----|-------------|
 | Selenium 4 Docs | <https://www.selenium.dev/documentation> | Browser automation |
 | Playwright | <https://playwright.dev> | Modern browser automation |
-| Scrapy + Playwright | <https://scrapy-plugins.github.io/scrapy-playwright> | Scrapy integration |
+| Stack Overflow 2026 | <https://stackoverflow.blog/2026/06/15/selenium-vs-cypress-vs-playwright> | Automation comparison |
 
 ### Research Methodology
-- **Web search:** web_search (2026 Selenium detection patterns)
-- **Documentation:** web_extract (Selenium Manager, Playwright docs)
-- **Tool comparison:** Selenium vs Playwright vs Puppeteer benchmarks
-- **Last verified:** 2026-07-16
+- **Web search:** web_search (2026 Selenium vs Playwright, BrowserStack, Katalon comparisons)
+- **Documentation:** web_extract (Selenium Manager, WebDriver BiDi docs)
+- **Last verified:** 2026-07-28

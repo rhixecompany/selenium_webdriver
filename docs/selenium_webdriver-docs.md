@@ -155,19 +155,19 @@ Provides reusable utility functions for Selenium WebDriver operations. All funct
 
 #### Functions
 
-| Function | Description |
-|----------|-------------|
-| `exampleExplicitWait(driver)` | Demonstrates explicit wait patterns |
-| `safeClick(driver, locator, maxRetries)` | Click with stale element retry (500ms delay) |
-| `performGet(driver, url)` | Navigate to URL and wait for element |
-| `clickElement(driver, locator, maxRetries)` | Click with retry logic |
-| `clickNormalElement(driver, locator, maxRetries)` | Click without delay |
-| `textElement(driver, locator, maxRetries)` | Get text with retry (500ms delay) |
-| `textNormalElement(driver, locator, maxRetries)` | Get text without delay |
-| `textareaElement(driver, locator, maxRetries)` | Get textarea content (trimmed) |
-| `imageElement(driver, locator, maxRetries)` | Get image src attribute |
-| `hrefElement(driver, locator, maxRetries)` | Get href attribute |
-| `textElements(driver, locator, maxRetries)` | Get multiple elements |
+| Function                                          | Description                                  |
+| ------------------------------------------------- | -------------------------------------------- |
+| `exampleExplicitWait(driver)`                     | Demonstrates explicit wait patterns          |
+| `safeClick(driver, locator, maxRetries)`          | Click with stale element retry (500ms delay) |
+| `performGet(driver, url)`                         | Navigate to URL and wait for element         |
+| `clickElement(driver, locator, maxRetries)`       | Click with retry logic                       |
+| `clickNormalElement(driver, locator, maxRetries)` | Click without delay                          |
+| `textElement(driver, locator, maxRetries)`        | Get text with retry (500ms delay)            |
+| `textNormalElement(driver, locator, maxRetries)`  | Get text without delay                       |
+| `textareaElement(driver, locator, maxRetries)`    | Get textarea content (trimmed)               |
+| `imageElement(driver, locator, maxRetries)`       | Get image src attribute                      |
+| `hrefElement(driver, locator, maxRetries)`        | Get href attribute                           |
+| `textElements(driver, locator, maxRetries)`       | Get multiple elements                        |
 
 #### Usage Example
 
@@ -175,7 +175,7 @@ Provides reusable utility functions for Selenium WebDriver operations. All funct
 import { clickElement, textElement, hrefElement } from "./utils.js";
 
 // Click a button
-await clickElement(driver, By.css('.submit-button'));
+await clickElement(driver, By.css(".submit-button"));
 
 // Get text from element
 let title = await textElement(driver, By.xpath('//h1[@class="title"]'));
@@ -280,10 +280,7 @@ Generated in project root after successful scrape. Contains array of comic objec
 [
   {
     "title": "Comic Title",
-    "images": [
-      { "url": "https://..." },
-      { "url": "https://..." }
-    ],
+    "images": [{ "url": "https://..." }, { "url": "https://..." }],
     "description": "Comic description...",
     "slug": "comic-slug",
     "serialization": "Serialization info",
@@ -292,10 +289,7 @@ Generated in project root after successful scrape. Contains array of comic objec
     "rating": "4.5",
     "status": "Ongoing",
     "type": "Manga",
-    "genres": [
-      { "name": "Action" },
-      { "name": "Fantasy" }
-    ],
+    "genres": [{ "name": "Action" }, { "name": "Fantasy" }],
     "updatedOn": "2026-05-15"
   }
 ]

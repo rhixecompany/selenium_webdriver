@@ -39,7 +39,7 @@ Clicks an element with retry logic for stale element references. Includes a 500m
 **Example:**
 
 ```javascript
-await safeClick(driver, By.css('.myButtonClass'));
+await safeClick(driver, By.css(".myButtonClass"));
 ```
 
 ---
@@ -58,7 +58,7 @@ Navigates to a URL and waits for a specific element to be located.
 **Example:**
 
 ```javascript
-await performGet(driver, 'https://asuracomic.net/series');
+await performGet(driver, "https://asuracomic.net/series");
 ```
 
 ---

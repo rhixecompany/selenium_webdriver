@@ -21,42 +21,42 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 
 ### Languages & Runtimes
 
-| Technology | Version | Usage |
-|---|---|---|
-| JavaScript (ES Modules) | — | Primary language |
-| Node.js | ^18+ | JavaScript runtime |
-| npm | — | Package manager |
+| Technology              | Version | Usage              |
+| ----------------------- | ------- | ------------------ |
+| JavaScript (ES Modules) | —       | Primary language   |
+| Node.js                 | ^18+    | JavaScript runtime |
+| npm                     | —       | Package manager    |
 
 ### Dependencies
 
-| Dependency | Version | Purpose |
-|---|---|---|
-| selenium-webdriver | 4.34.0 | Browser automation |
-| assert | 2.1.0 | Testing assertions |
+| Dependency         | Version | Purpose            |
+| ------------------ | ------- | ------------------ |
+| selenium-webdriver | 4.34.0  | Browser automation |
+| assert             | 2.1.0   | Testing assertions |
 
 ### Dev Dependencies
 
-| Dependency | Version | Purpose |
-|---|---|---|
-| prettier | ^3.6.2 | Code formatting |
+| Dependency | Version | Purpose         |
+| ---------- | ------- | --------------- |
+| prettier   | ^3.6.2  | Code formatting |
 
 ---
 
 ## Licensing
 
-| Component | License |
-|---|---|
+| Component          | License         |
+| ------------------ | --------------- |
 | selenium_webdriver | (not specified) |
 
 ---
 
 ## Key Scripts
 
-| Script | Description |
-|---|---|
-| `npm test` | Run scraper (`node src/scrape.js`) |
-| `npm run format` | Prettier formatting |
-| `npm run format:check` | Format checking |
+| Script                 | Description                        |
+| ---------------------- | ---------------------------------- |
+| `npm test`             | Run scraper (`node src/scrape.js`) |
+| `npm run format`       | Prettier formatting                |
+| `npm run format:check` | Format checking                    |
 
 ---
 
@@ -86,13 +86,13 @@ selenium_webdriver/
 
 ## Patterns
 
-| Pattern | Implementation |
-|---|---|
-| Wait Strategy | `WebDriverWait` with explicit conditions |
+| Pattern        | Implementation                            |
+| -------------- | ----------------------------------------- |
+| Wait Strategy  | `WebDriverWait` with explicit conditions  |
 | Error Handling | Retry on `StaleElementReferenceException` |
-| Selectors | Consistent `By` (CSS/XPath) |
-| Cleanup | `driver.quit()` in `finally` block |
-| Politeness | Respect `robots.txt`, configurable delays |
+| Selectors      | Consistent `By` (CSS/XPath)               |
+| Cleanup        | `driver.quit()` in `finally` block        |
+| Politeness     | Respect `robots.txt`, configurable delays |
 
 ---
 

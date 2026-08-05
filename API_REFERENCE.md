@@ -3,8 +3,8 @@
 ## Endpoints
 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | / | Main entry |
+| ------ | -------- | ----------- |
+| GET    | /        | Main entry  |
 
 ## Auth
 

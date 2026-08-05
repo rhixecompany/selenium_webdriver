@@ -7,8 +7,8 @@
 
 ## Results
 
-| Generator | Status |
-|-----------|--------|
+| Generator  | Status  |
+| ---------- | ------- |
 | All stages | ✅ PASS |
 
 ## Overall: ✅ PASS

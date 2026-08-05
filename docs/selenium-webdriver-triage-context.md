@@ -15,10 +15,10 @@ this audit the repo had no documentation whatsoever — only raw source and a
 
 ## Issues Found & Fixed
 
-| # | Issue | Action | Commit |
-|---|-------|--------|--------|
-| 1 | No README or docs of any kind | Added `README.md` and `docs/selenium_webdriver-docs.md` | `8f1b9f5` |
-| 2 | No code-level documentation | Added `docs/code-docs/index.md`, `docs/code-docs/scrape.md`, `docs/code-docs/utils.md` | `8f1b9f5` |
+| #   | Issue                         | Action                                                                                 | Commit    |
+| --- | ----------------------------- | -------------------------------------------------------------------------------------- | --------- |
+| 1   | No README or docs of any kind | Added `README.md` and `docs/selenium_webdriver-docs.md`                                | `8f1b9f5` |
+| 2   | No code-level documentation   | Added `docs/code-docs/index.md`, `docs/code-docs/scrape.md`, `docs/code-docs/utils.md` | `8f1b9f5` |
 
 ## Final State
 

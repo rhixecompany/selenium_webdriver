@@ -1,6 +1,10 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
-  ]
+    "dbaeumer.vscode-eslint",
+    "davidanson.vscode-markdownlint",
+    "streetsidesoftware.code-spell-checker",
+    "oven.bun-vscode"
+  ],
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript-tslint-plugin", "hookyqr.beautify"]
 }

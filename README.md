@@ -8,13 +8,13 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 
 ## Technology Stack
 
-| Category | Technology |
-|---|---|
-| **Runtime** | Node.js ^18+ |
-| **Language** | JavaScript (ES Modules) |
+| Category               | Technology                |
+| ---------------------- | ------------------------- |
+| **Runtime**            | Node.js ^18+              |
+| **Language**           | JavaScript (ES Modules)   |
 | **Browser Automation** | selenium-webdriver 4.34.0 |
-| **Testing** | assert (built-in) |
-| **Formatting** | Prettier ^3.6.2 |
+| **Testing**            | assert (built-in)         |
+| **Formatting**         | Prettier ^3.6.2           |
 
 ## Architecture
 
@@ -67,7 +67,7 @@ npm run format:check
 
 ```javascript
 // Explicit WebDriverWait — never use sleep
-await driver.wait(until.elementLocated(By.css('.selector')), 10000);
+await driver.wait(until.elementLocated(By.css(".selector")), 10000);
 ```
 
 ### Stale Element Handling

@@ -11,12 +11,12 @@
 
 ## Architecture
 
-| Property | Value |
-|----------|-------|
-| **Type** | Standalone Node.js scraper |
+| Property    | Value                                    |
+| ----------- | ---------------------------------------- |
+| **Type**    | Standalone Node.js scraper               |
 | **Pattern** | Script-based, explicit waits, ES Modules |
-| **Runtime** | Node.js 18+ |
-| **Library** | `selenium-webdriver` 4.x + ChromeDriver |
+| **Runtime** | Node.js 18+                              |
+| **Library** | `selenium-webdriver` 4.x + ChromeDriver  |
 
 ---
 
@@ -35,12 +35,12 @@ selenium_webdriver/
 
 ## Technology Stack
 
-| Layer | Technology |
-|-------|------------|
-| Runtime | Node.js 18+ |
-| Automation | selenium-webdriver 4.34.0 |
-| Browser | ChromeDriver (auto-managed) |
-| Formatting | Prettier (2-space) |
+| Layer         | Technology                  |
+| ------------- | --------------------------- |
+| Runtime       | Node.js 18+                 |
+| Automation    | selenium-webdriver 4.34.0   |
+| Browser       | ChromeDriver (auto-managed) |
+| Formatting    | Prettier (2-space)          |
 | Module System | ES Modules (`type: module`) |
 
 ---
@@ -71,12 +71,12 @@ npm run format:check   # Prettier check
 
 **P1:** Merge into `rhixecompany-comics/backend/apps/scrapers/selenium_utils.py`
 
-| Current | Target |
-|---------|--------|
+| Current            | Target            |
+| ------------------ | ----------------- |
 | Node.js + Selenium | Python + Selenium |
-| ES Modules | Standard Python |
-| Manual execution | Celery task |
-| Output to JSON | Django ORM upsert |
+| ES Modules         | Standard Python   |
+| Manual execution   | Celery task       |
+| Output to JSON     | Django ORM upsert |
 
 ---
 
@@ -90,12 +90,12 @@ npm run format:check   # Prettier check
 
 ## Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| selenium-webdriver | 4.34.0 | Browser automation |
-| prettier | ^3.6.2 | Formatting |
+| Package                     | Version | Purpose                |
+| --------------------------- | ------- | ---------------------- |
+| selenium-webdriver          | 4.34.0  | Browser automation     |
+| prettier                    | ^3.6.2  | Formatting             |
 | prettier-plugin-tailwindcss | ^0.6.14 | Tailwind class sorting |
-| pretty-quick | ^4.2.2 | Pre-commit formatting |
+| pretty-quick                | ^4.2.2  | Pre-commit formatting  |
 
 ---
 

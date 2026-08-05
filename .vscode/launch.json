@@ -13,10 +13,14 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "start"
-      ],
+      "runtimeArgs": ["start"],
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Bun: Run File",
+      "type": "bun",
+      "request": "launch",
+      "program": "${file}"
     }
   ]
 }

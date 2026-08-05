@@ -5,15 +5,25 @@
   "scripts": {
     "test": "node src/scrape.js",
     "format": "prettier --write './**/**/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,html}'",
-    "format:check": "prettier --check './**/**/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,html}'"
+    "format:check": "prettier --check './**/**/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,html}'",
+    "lint": "eslint .",
+    "markdownlint": "markdownlint-cli2 \"**/*.md\"",
+    "spellcheck": "cspell lint \"**/*.{ts,tsx,js,jsx,mjs,json,yaml,yml,toml,py,sh}\" --no-progress",
+    "check": "npm run lint && npm run format:check && npm run markdownlint && npm run spellcheck"
   },
   "dependencies": {
     "assert": "2.1.0",
     "selenium-webdriver": "4.34.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "globals": "^17.8.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "pretty-quick": "^4.2.2"
+    "pretty-quick": "^4.2.2",
+    "typescript-eslint": "^8.65.0",
+    "cspell": "^9.7.0",
+    "markdownlint-cli2": "^0.17.2",
+    "eslint": "^10.8.0"
   }
 }

@@ -6,6 +6,30 @@
       "label": "Dev",
       "type": "shell",
       "group": "build"
+    },
+    {
+      "command": "npm run lint",
+      "label": "Lint",
+      "type": "shell",
+      "group": "build"
+    },
+    {
+      "command": "npm run format:check",
+      "label": "Format Check",
+      "type": "shell",
+      "group": "build"
+    },
+    {
+      "command": "npm run spellcheck",
+      "label": "Spellcheck",
+      "type": "shell",
+      "group": "build"
+    },
+    {
+      "command": "npm run markdownlint",
+      "label": "Markdownlint",
+      "type": "shell",
+      "group": "build"
     }
   ]
 }

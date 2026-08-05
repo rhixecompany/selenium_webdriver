@@ -9,10 +9,7 @@ async function scrapeComics() {
   const driver = await new Builder().forBrowser("chrome").build();
   try {
     await driver.get("https://example.com/comics");
-    await driver.wait(
-      until.elementLocated(By.css(".comic-item")),
-      10000
-    );
+    await driver.wait(until.elementLocated(By.css(".comic-item")), 10000);
     const items = await driver.findElements(By.css(".comic-item"));
     const results = [];
     for (const item of items) {

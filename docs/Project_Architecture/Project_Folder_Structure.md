@@ -48,12 +48,12 @@ selenium_webdriver/
 
 ## Naming Conventions
 
-| Convention | Pattern | Examples |
-|---|---|---|
-| **Source files** | kebab-case | `src/` (contents) |
-| **Config** | dotted-prefix | `.github/`, `.vscode/` |
+| Convention        | Pattern       | Examples                 |
+| ----------------- | ------------- | ------------------------ |
+| **Source files**  | kebab-case    | `src/` (contents)        |
+| **Config**        | dotted-prefix | `.github/`, `.vscode/`   |
 | **Documentation** | UPPER_CASE.md | `README.md`, `AGENTS.md` |
-| **Docs subdirs** | kebab-case | `docs/code-docs/` |
+| **Docs subdirs**  | kebab-case    | `docs/code-docs/`        |
 
 ---
 
@@ -67,11 +67,11 @@ selenium_webdriver/
 
 ## Project Type Indicators
 
-| Indicator | Value |
-|---|---|
-| Has `package.json` | ✅ Node.js / Bun project |
-| Has `bun.lock` | ✅ Uses Bun package manager |
-| Has `src/` | ✅ Source code directory |
+| Indicator              | Value                       |
+| ---------------------- | --------------------------- |
+| Has `package.json`     | ✅ Node.js / Bun project    |
+| Has `bun.lock`         | ✅ Uses Bun package manager |
+| Has `src/`             | ✅ Source code directory    |
 | Has comprehensive docs | ✅ Full documentation suite |
 
 ---

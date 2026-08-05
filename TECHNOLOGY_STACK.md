@@ -8,36 +8,39 @@
 
 ## Core Technologies
 
-| Category | Technology | Version | License |
-|----------|-----------|---------|---------|
-| **Runtime** | Node.js | 18+ | MIT |
-| **Language** | JavaScript (ES Modules) | ES2024 | - |
-| **Library** | selenium-webdriver | 4.34.0 | Apache 2.0 |
-| **Formatting** | Prettier | ^3.6.2 | MIT |
-| **Dev Tools** | pretty-quick | ^4.2.2 | MIT |
+| Category       | Technology              | Version | License    |
+| -------------- | ----------------------- | ------- | ---------- |
+| **Runtime**    | Node.js                 | 18+     | MIT        |
+| **Language**   | JavaScript (ES Modules) | ES2024  | -          |
+| **Library**    | selenium-webdriver      | 4.34.0  | Apache 2.0 |
+| **Formatting** | Prettier                | ^3.6.2  | MIT        |
+| **Dev Tools**  | pretty-quick            | ^4.2.2  | MIT        |
 
 ---
 
 ## Dependencies
 
 ### Production (2 packages)
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `assert` | 2.1.0 | Node.js assert module (polyfill) |
-| `selenium-webdriver` | 4.34.0 | Selenium WebDriver for Node.js |
+
+| Package              | Version | Purpose                          |
+| -------------------- | ------- | -------------------------------- |
+| `assert`             | 2.1.0   | Node.js assert module (polyfill) |
+| `selenium-webdriver` | 4.34.0  | Selenium WebDriver for Node.js   |
 
 ### Development (3 packages)
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `prettier` | ^3.6.2 | Code formatting |
+
+| Package                       | Version | Purpose                                        |
+| ----------------------------- | ------- | ---------------------------------------------- |
+| `prettier`                    | ^3.6.2  | Code formatting                                |
 | `prettier-plugin-tailwindcss` | ^0.6.14 | Tailwind class sorting (unused but configured) |
-| `pretty-quick` | ^4.2.2 | Pre-commit formatting |
+| `pretty-quick`                | ^4.2.2  | Pre-commit formatting                          |
 
 ---
 
 ## Architecture
 
 **Pattern:** Script-based scraping with explicit waits
+
 - **No framework** — single entry point
 - **ES Modules** (`"type": "module"` in package.json)
 - **ChromeDriver** managed externally
@@ -62,9 +65,9 @@ selenium_webdriver/
 
 ```javascript
 // Explicit waits (never sleep)
-const { until, By } = require('selenium-webdriver');
+const { until, By } = require("selenium-webdriver");
 
-await driver.wait(until.elementLocated(By.css('.selector')), 10000);
+await driver.wait(until.elementLocated(By.css(".selector")), 10000);
 await driver.wait(until.elementIsVisible(element), 5000);
 
 // Retry on StaleElementReferenceException
@@ -75,10 +78,10 @@ async function safeClick(driver, selector, retries = 3) {
       await el.click();
       return;
     } catch (e) {
-      if (e.name !== 'StaleElementReferenceError') throw e;
+      if (e.name !== "StaleElementReferenceError") throw e;
     }
   }
-  throw new Error('Max retries exceeded');
+  throw new Error("Max retries exceeded");
 }
 
 // Cleanup in finally
@@ -111,6 +114,7 @@ npm run format:check   # prettier --check
 ## Configuration
 
 ### package.json Scripts
+
 ```json
 {
   "scripts": {
@@ -122,6 +126,7 @@ npm run format:check   # prettier --check
 ```
 
 ### Prettier Config (`.prettierrc` or package.json)
+
 ```json
 {
   "semi": true,
@@ -136,16 +141,16 @@ npm run format:check   # prettier --check
 
 ## Conventions
 
-| Convention | Standard |
-|------------|----------|
-| **Waits** | Explicit `WebDriverWait` with expected conditions |
-| **Retries** | Retry on `StaleElementReferenceException` |
-| **Selectors** | Prefer `By.css` or `By.xpath` |
-| **Cleanup** | `driver.quit()` in `finally` block |
-| **Delays** | Polite delays between requests |
-| **robots.txt** | Check and respect |
-| **Format** | Prettier (2-space indent) |
-| **Modules** | ES Modules (`import`/`export`) |
+| Convention     | Standard                                          |
+| -------------- | ------------------------------------------------- |
+| **Waits**      | Explicit `WebDriverWait` with expected conditions |
+| **Retries**    | Retry on `StaleElementReferenceException`         |
+| **Selectors**  | Prefer `By.css` or `By.xpath`                     |
+| **Cleanup**    | `driver.quit()` in `finally` block                |
+| **Delays**     | Polite delays between requests                    |
+| **robots.txt** | Check and respect                                 |
+| **Format**     | Prettier (2-space indent)                         |
+| **Modules**    | ES Modules (`import`/`export`)                    |
 
 ---
 
@@ -159,10 +164,10 @@ npm run format:check   # prettier --check
 
 ## External Dependencies
 
-| Dependency | Purpose |
-|------------|---------|
-| **ChromeDriver** | Must match Chrome version |
-| **Google Chrome** | Browser for automation |
+| Dependency        | Purpose                   |
+| ----------------- | ------------------------- |
+| **ChromeDriver**  | Must match Chrome version |
+| **Google Chrome** | Browser for automation    |
 
 ---
 
@@ -172,4 +177,4 @@ Apache 2.0 (selenium-webdriver) + MIT (tooling)
 
 ---
 
-*Generated by Hermes Agent Technology Stack Blueprint Generator*
+_Generated by Hermes Agent Technology Stack Blueprint Generator_

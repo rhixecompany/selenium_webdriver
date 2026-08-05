@@ -56,7 +56,10 @@ Structured page parsing with explicit element waits and error handling.
 
 ```javascript
 export async function parsePage(driver) {
-  let comicLinks = await textElements(driver, By.xpath("//div[@class='grid...']/a"));
+  let comicLinks = await textElements(
+    driver,
+    By.xpath("//div[@class='grid...']/a"),
+  );
   for (let i = 0; i < comicLinks.length; i++) {
     let link = await comicLinks[i];
     await link.click();

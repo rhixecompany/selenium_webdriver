@@ -98,15 +98,15 @@ try {
 
 ```bash
 # Install
-npm install
+bun install
 
 # Run scraper
-npm test               # runs scrape.js
+bun run test               # runs scrape.js
 node src/scrape.js
 
 # Format
-npm run format         # prettier --write
-npm run format:check   # prettier --check
+bun run format         # prettier --write
+bun run format:check   # prettier --check
 ```
 
 ---

@@ -60,7 +60,7 @@ git clone https://github.com/rhixecompany/selenium_webdriver.git
 cd selenium_webdriver
 
 # Install dependencies
-npm install
+bun install
 ```
 
 ### Dependencies
@@ -83,7 +83,7 @@ npm install
 ### Running the Main Scraper
 
 ```bash
-npm run test
+bun run test
 # or
 node src/scrape.js
 ```
@@ -116,10 +116,10 @@ A simple Selenium test that demonstrates basic form interaction.
 
 ```bash
 # Format all code
-npm run format
+bun run format
 
 # Check formatting without modifying
-npm run format:check
+bun run format:check
 ```
 
 ---

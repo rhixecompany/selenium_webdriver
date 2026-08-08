@@ -32,17 +32,17 @@ selenium_webdriver/
 # Prerequisites: Node.js 18+, ChromeDriver installed
 
 # Install dependencies
-npm install
+bun install
 
 # Run the scraper
 node src/scrape.js
 
 # Run test (executes scraper)
-npm test
+bun run test
 
 # Format code
-npm run format
-npm run format:check
+bun run format
+bun run format:check
 ```
 
 ## Key Features

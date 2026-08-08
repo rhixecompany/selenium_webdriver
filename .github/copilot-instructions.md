@@ -13,14 +13,14 @@ Project-wide guidance for the Selenium scraping utility.
 Run from the project root:
 
 ```bash
-npm install
-npm test
+bun install
+bun run test
 node src/scrape.js
 node src/scrape2.js
 node src/test.js
 node src/test1.js
-npm run format
-npm run format:check
+bun run format
+bun run format:check
 ```
 
 ## Architecture

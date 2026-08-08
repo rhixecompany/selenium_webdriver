@@ -16,4 +16,4 @@
 
 **Env**: Optional `CHROME_PATH`, `CHROME_DRIVER_PATH`, `PROXY_URL`.
 
-**Commands**: `npm install` (setup); `node src/scrape.js` (run); `npm test` (executes scrape.js); `npm run format` (Prettier).
+**Commands**: `bun install` (setup); `node src/scrape.js` (run); `bun run test` (executes scrape.js); `bun run format` (Prettier).

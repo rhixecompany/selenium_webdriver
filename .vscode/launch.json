@@ -9,7 +9,7 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "npm start",
+      "name": "bun run start",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",

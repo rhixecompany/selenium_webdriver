@@ -60,7 +60,7 @@ selenium_webdriver/
 ## Data Flow
 
 ```
-npm test / node src/scrape.js
+bun run test / node src/scrape.js
               ↓
     Selenium WebDriver Instance
               ↓

@@ -26,7 +26,7 @@ A Node.js Selenium-based web scraper for comics/manga targeting JavaScript-rende
 
 **Steps:**
 
-1. User runs `node src/scrape.js` or `npm test` (runs scrape.js)
+1. User runs `node src/scrape.js` or `bun run test` (runs scrape.js)
 2. Script initializes ChromeDriver via Selenium WebDriver
 3. Navigates to target manga/comic URL
 4. Uses `WebDriverWait` for dynamic content to fully render
@@ -82,7 +82,7 @@ User                    scrape.js                Selenium/ChromeDriver         T
 **Test Patterns:**
 
 - Manual testing via `node src/scrape.js`
-- `npm test` configured to run scrape.js as test
+- `bun run test` configured to run scrape.js as test
 - Consistent `By` selectors for maintainability
 
 ---

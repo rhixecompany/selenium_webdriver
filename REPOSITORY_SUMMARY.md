@@ -58,11 +58,11 @@ selenium_webdriver/
 ## Commands
 
 ```bash
-npm install
-npm test               # Runs scrape.js
+bun install
+bun run test               # Runs scrape.js
 node src/scrape.js     # Manual invocation
-npm run format         # Prettier write
-npm run format:check   # Prettier check
+bun run format         # Prettier write
+bun run format:check   # Prettier check
 ```
 
 ---

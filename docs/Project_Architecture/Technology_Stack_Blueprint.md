@@ -54,9 +54,9 @@ A Node.js Selenium-based web scraper targeting comics/manga sites. Uses Selenium
 
 | Script                 | Description                        |
 | ---------------------- | ---------------------------------- |
-| `npm test`             | Run scraper (`node src/scrape.js`) |
-| `npm run format`       | Prettier formatting                |
-| `npm run format:check` | Format checking                    |
+| `bun run test`             | Run scraper (`node src/scrape.js`) |
+| `bun run format`       | Prettier formatting                |
+| `bun run format:check` | Format checking                    |
 
 ---
 

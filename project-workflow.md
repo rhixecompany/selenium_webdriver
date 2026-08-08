@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-npm install
+bun install
 # Ensure Chrome browser is installed
 ```
 
@@ -11,7 +11,7 @@ npm install
 
 ```bash
 # Main scraper
-npm test                # runs node src/scrape.js
+bun run test                # runs node src/scrape.js
 node src/scrape.js      # or directly
 
 # Other scripts
@@ -23,8 +23,8 @@ node src/test1.js
 ## Code Quality
 
 ```bash
-npm run format           # Prettier format
-npm run format:check     # Check formatting
+bun run format           # Prettier format
+bun run format:check     # Check formatting
 ```
 
 ## Adding a New Scraper

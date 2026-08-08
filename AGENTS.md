@@ -18,10 +18,10 @@ Node.js 18+ Selenium WebDriver scraper for comics/manga. ES Modules, ChromeDrive
 ## Commands
 
 ```bash
-npm install
-npm test               # runs scrape.js
+bun install
+bun run test               # runs scrape.js
 node src/scrape.js
-npm run format
+bun run format
 ```
 
 ## Conventions

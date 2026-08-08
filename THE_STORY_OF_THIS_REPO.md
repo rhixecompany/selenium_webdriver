@@ -95,7 +95,7 @@ Simple. Portable. Consumable by the Next.js reader (`rhixe_scans`) or the Django
 
 ## Chapter 4: No CI, No Problem (Until There Was)
 
-Originally: **no CI.** Manual `npm test` (which runs `node src/scrape.js`). Manual `npm run format`.
+Originally: **no CI.** Manual `bun run test` (which runs `node src/scrape.js`). Manual `bun run format`.
 
 Then the repo-management sweep added:
 

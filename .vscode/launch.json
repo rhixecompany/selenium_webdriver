@@ -13,7 +13,9 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
+      "runtimeArgs": [
+        "start"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -21,6 +23,16 @@
       "type": "bun",
       "request": "launch",
       "program": "${file}"
+    },
+    {
+      "name": "npm start",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "start"
+      ],
+      "console": "integratedTerminal"
     }
   ]
 }

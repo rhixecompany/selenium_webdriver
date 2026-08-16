@@ -1,0 +1,13 @@
+# selenium_webdriver — Bun configuration
+# Node.js Selenium scraper for comics/manga
+
+[build]
+loader = false
+
+[test]
+coverage = true
+
+[install]
+optional = true
+dev = true
+peer = true

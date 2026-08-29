@@ -1,41 +1,17 @@
-# selenium_webdriver — Chrome Scraper
+# selenium_webdriver — AGENTS.md
 
-## Architecture
+**Canonical reference:** See `../../AGENTS.md` for workspace-wide rules, conventions, and workflows.
 
-- **Type:** Node.js Selenium scraper for comics/manga
-- **Pattern:** Script-based scraping with explicit waits and error handling
-- **Reference:** [Workflow Analysis](docs/Project_Architecture/Workflow_Analysis.md), [Exemplars](docs/Project_Architecture/exemplars.md)
+This file contains only selenium_webdriver-specific overrides and additions.
 
-Node.js 18+ Selenium WebDriver scraper for comics/manga. ES Modules, ChromeDriver, manual invocation via `node src/scrape.js`.
+## Project-Specific Commands
 
-## Stack
+See `package.json` or `README.md` for build/test/lint commands specific to this project.
 
-- **Runtime:** Node.js 18+
-- **Library:** `selenium-webdriver` 4.x + ChromeDriver
-- **Formatting:** Prettier (2-space indent)
-- **Module System:** ES Modules (type: module)
+## Project-Specific Conventions
 
-## Commands
+Add any conventions that differ from the workspace root here.
 
-```bash
-bun install
-bun run test               # runs scrape.js
-node src/scrape.js
-bun run format
-```
+---
 
-## Conventions
-
-- Explicit `WebDriverWait` with expected conditions — never use `sleep()`
-- Retry logic on `StaleElementReferenceException`
-- Consistent `By` selector strategy (prefer `By.css` or `By.xpath`)
-- `driver.quit()` in `finally` block to ensure cleanup
-- No build step; no deployment pipeline
-- `robots.txt` compliance + polite delays between requests
-
-## Notes
-
-- No ChromeDriver/profiles committed to VCS
-- Manual testing via `node src/scrape.js`
-- ES Modules throughout
-- No CI/CD — standalone scraper tool
+*For all shared rules, toolchain, routing, and conventions, see `../../AGENTS.md`.*
